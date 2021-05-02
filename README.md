@@ -1,1 +1,1 @@
-# Magnate 0.0.2
+# Magnate 0.0.3

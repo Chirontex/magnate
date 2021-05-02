@@ -34,8 +34,11 @@ class EntryPointInjector
      * Root URL to your plugin.
      * @since 0.0.1
      */
-    protected $uri;
+    protected $url;
 
+    /**
+     * @since 0.0.1
+     */
     public function __construct(string $path, string $url)
     {
         
@@ -51,6 +54,49 @@ class EntryPointInjector
         );
 
         $this->wpdb = $wpdb;
+
+        if (is_dir($path)) throw new EntryPointInjectorException(
+            EntryPointInjectorException::pickMessage(
+                EntryPointInjectorException::NOT_DIR
+            ),
+            EntryPointInjectorException::pickCode(
+                EntryPointInjectorException::NOT_DIR
+            )
+        );
+
+        $this->path = $path;
+
+        $this->url = $url;
+
+    }
+
+    /**
+     * @since 0.0.3
+     */
+    public function getWpdb() : wpdb
+    {
+
+        return $this->wpdb;
+
+    }
+
+    /**
+     * @since 0.0.3
+     */
+    public function getPath() : string
+    {
+
+        return $this->path;
+
+    }
+
+    /**
+     * @since 0.0.3
+     */
+    public function getUrl() : string
+    {
+
+        return $this->url;
 
     }
 

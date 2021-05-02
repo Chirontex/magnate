@@ -18,6 +18,11 @@ interface ExceptionInterface
     const NOT_WPDB = '-1 ||| $wpdb global variable is not WPDB instance.';
 
     /**
+     * @since 0.0.2
+     */
+    const NOT_DIR = '-2 ||| %1$s is not a directory.';
+
+    /**
      * Return error code number.
      * @since 0.0.1
      * 
