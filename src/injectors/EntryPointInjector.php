@@ -5,6 +5,7 @@
  */
 namespace Magnate\Injectors;
 
+use Magnate\Interfaces\EntryPointInjectorInterface;
 use Magnate\Exceptions\EntryPointInjectorException;
 use wpdb;
 
@@ -12,7 +13,7 @@ use wpdb;
  * Injector intends for EntryPoint class.
  * @since 0.0.1
  */
-class EntryPointInjector
+class EntryPointInjector implements EntryPointInjectorInterface
 {
 
     /**
