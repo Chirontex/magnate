@@ -5,6 +5,7 @@
  */
 namespace Magnate\Tables;
 
+use Magnate\Interfaces\ActiveRecordInterface;
 use Magnate\Exceptions\ActiveRecordException;
 use wpdb;
 
@@ -13,7 +14,7 @@ use wpdb;
  * Active Record implementation.
  * @since 0.0.5
  */
-abstract class ActiveRecord
+abstract class ActiveRecord implements ActiveRecordInterface
 {
 
     /**
@@ -54,13 +55,7 @@ abstract class ActiveRecord
     }
 
     /**
-     * Return Active Record object by ID.
      * @since 0.0.5
-     * 
-     * @param int $id
-     * Entry ID.
-     * 
-     * @return self
      */
     public static function find(int $id) : self
     {

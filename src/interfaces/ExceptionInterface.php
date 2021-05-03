@@ -43,6 +43,16 @@ interface ExceptionInterface
     const NOT_FOUND = '-6 ||| %1$s not found.';
 
     /**
+     * @since 0.0.6
+     */
+    const NOT_TYPE = '-7 ||| %1$s must be %2$s.';
+
+    /**
+     * @since 0.0.6
+     */
+    const NOT_EXISTS = '-8 ||| %1$s not exists.';
+
+    /**
      * Return error code number.
      * @since 0.0.1
      * 
