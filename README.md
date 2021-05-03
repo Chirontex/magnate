@@ -1,4 +1,4 @@
-# Magnate 0.0.3
+# Magnate 0.0.4
 
 ## TODO
 
@@ -6,6 +6,4 @@
 
 2. Add Active Record implementation.
 
-3. Add migrations.
-
-4. Add Relocator class and Noticer trait.
+3. Add Relocator class and Noticer trait.

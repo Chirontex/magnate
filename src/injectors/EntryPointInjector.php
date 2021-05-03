@@ -39,6 +39,8 @@ class EntryPointInjector implements EntryPointInjectorInterface
 
     /**
      * @since 0.0.1
+     * 
+     * @throws Magnate\Exceptions\EntryPointInjectorException
      */
     public function __construct(string $path, string $url)
     {

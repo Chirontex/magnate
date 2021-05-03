@@ -21,6 +21,16 @@ interface ExceptionInterface
      * @since 0.0.2
      */
     const NOT_DIR = '-2 ||| %1$s is not a directory.';
+    
+    /**
+     * @since 0.0.4
+     */
+    const EMPTY = '-3 ||| %1$s cannot be empty.';
+
+    /**
+     * @since 0.0.4
+     */
+    const CREATE_TABLE = '-4 ||| %1$s table creation failure.';
 
     /**
      * Return error code number.
