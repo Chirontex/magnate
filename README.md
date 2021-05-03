@@ -1,4 +1,4 @@
-# Magnate 0.0.6
+# Magnate 0.0.7
 
 ## TODO
 

@@ -53,6 +53,11 @@ interface ExceptionInterface
     const NOT_EXISTS = '-8 ||| %1$s not exists.';
 
     /**
+     * @since 0.0.7
+     */
+    const IS_EMPTY = '-9 ||| %1$s is empty.';
+
+    /**
      * Return error code number.
      * @since 0.0.1
      * 

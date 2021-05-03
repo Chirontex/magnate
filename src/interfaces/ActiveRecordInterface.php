@@ -13,6 +13,14 @@ interface ActiveRecordInterface
 {
 
     /**
+     * Return table name.
+     * @since 0.0.7
+     * 
+     * @return string
+     */
+    public static function tableName() : string;
+
+    /**
      * Return Active Record object by ID.
      * @since 0.0.5
      * 

@@ -63,6 +63,15 @@ class ActiveRecordCollection implements ActiveRecordCollectionInterface
     public function first() : ActiveRecordInterface
     {
 
+        if (empty($this->collection)) throw new ActiveRecordCollectionException(
+            sprintf(ActiveRecordCollectionException::pickMessage(
+                ActiveRecordCollectionException::IS_EMPTY
+            ), 'Collection'),
+            ActiveRecordCollectionException::pickCode(
+                ActiveRecordCollectionException::IS_EMPTY
+            )
+        );
+
         return $this->collection[0];
 
     }
@@ -72,6 +81,15 @@ class ActiveRecordCollection implements ActiveRecordCollectionInterface
      */
     public function last() : ActiveRecordInterface
     {
+
+        if (empty($this->collection)) throw new ActiveRecordCollectionException(
+            sprintf(ActiveRecordCollectionException::pickMessage(
+                ActiveRecordCollectionException::IS_EMPTY
+            ), 'Collection'),
+            ActiveRecordCollectionException::pickCode(
+                ActiveRecordCollectionException::IS_EMPTY
+            )
+        );
 
         return $this->collection[count($this->collection) - 1];
 

@@ -18,6 +18,24 @@ abstract class ActiveRecord implements ActiveRecordInterface
 {
 
     /**
+     * @var string[] $props_list
+     * Properties/fields list.
+     * @since 0.0.7
+     */
+    protected $props_list;
+
+    /**
+     * @since 0.0.7
+     */
+    public function __set($name, $value)
+    {
+        
+        if (array_search($name, $this->props_list) === false &&
+            ($name !== 'id' || $name !== 'ID')) $this->props_list[] = $name;
+
+    }
+
+    /**
      * Returns WPDB global singleton link.
      * @since 0.0.5
      * 
@@ -42,12 +60,9 @@ abstract class ActiveRecord implements ActiveRecordInterface
     }
 
     /**
-     * Return table name.
      * @since 0.0.5
-     * 
-     * @return string
      */
-    protected static function tableName() : string
+    public static function tableName() : string
     {
 
         return '';
