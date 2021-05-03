@@ -5,6 +5,7 @@
  */
 namespace Magnate\Tables;
 
+use Magnate\Interfaces\ActiveRecordSelectInterface;
 use Magnate\Interfaces\ActiveRecordInterface;
 use Magnate\Interfaces\ActiveRecordCollectionInterface;
 use Magnate\Exceptions\ActiveRecordSelectException;
@@ -14,7 +15,7 @@ use wpdb;
  * ActiveRecord select class.
  * @since 0.0.6
  */
-class ActiveRecordSelect
+class ActiveRecordSelect implements ActiveRecordSelectInterface
 {
 
     /**

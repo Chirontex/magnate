@@ -284,11 +284,11 @@ abstract class Migration
                     $entry,
                     $types
                 ) === false) throw new MigrationException(
-                MigrationException::pickMessage(
-                    MigrationException::INSERT_ENTRY
-                ),
+                sprintf(MigrationException::pickMessage(
+                    MigrationException::ENTRY
+                ), 'insertion'),
                 MigrationException::pickCode(
-                    MigrationException::INSERT_ENTRY
+                    MigrationException::ENTRY
                 )
             );
 
