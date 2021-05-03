@@ -3,7 +3,7 @@
  * @package Magnate
  * @author Dmitry Shumilin (chirontex@yandex.ru)
  */
-namespace Magnate;
+namespace Magnate\Tables;
 
 use Magnate\Exceptions\MigrationException;
 use wpdb;
@@ -43,6 +43,13 @@ abstract class Migration
      * @since 0.0.4
      */
     protected $indexes = [];
+
+    /**
+     * @var array $entries
+     * Entries that need to add to empty table.
+     * @since 0.0.5
+     */
+    protected $entries = [];
 
     /**
      * Class constructor.
@@ -185,6 +192,24 @@ abstract class Migration
     }
 
     /**
+     * Add entry to empty table.
+     * @since 0.0.5
+     * 
+     * @param array $fields
+     * Entry fields and values.
+     * 
+     * @return $this
+     */
+    protected function entry(array $fields) : self
+    {
+
+        $this->entries[] = $fields;
+
+        return $this;
+
+    }
+
+    /**
      * Create table if not exists.
      * @since 0.0.4
      * 
@@ -235,6 +260,39 @@ abstract class Migration
             ), $this->table_name),
             MigrationException::pickCode(MigrationException::CREATE_TABLE)
         );
+
+        foreach ($this->entries as $i => $entry) {
+
+            $types = [];
+
+            foreach ($entry as $key => $value) {
+
+                if (is_int($value)) $types[] = '%d';
+                elseif (is_float($value)) $types[] = '%f';
+                else {
+
+                    $this->entries[$i][$key] = (string)$value;
+
+                    $types[] = '%s';
+
+                }
+
+            }
+
+            if ($this->wpdb->insert(
+                    $this->wpdb->prefix.$this->table_name,
+                    $entry,
+                    $types
+                ) === false) throw new MigrationException(
+                MigrationException::pickMessage(
+                    MigrationException::INSERT_ENTRY
+                ),
+                MigrationException::pickCode(
+                    MigrationException::INSERT_ENTRY
+                )
+            );
+
+        }
 
         return $this;
 

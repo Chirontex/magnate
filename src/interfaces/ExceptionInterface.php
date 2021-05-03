@@ -33,6 +33,16 @@ interface ExceptionInterface
     const CREATE_TABLE = '-4 ||| %1$s table creation failure.';
 
     /**
+     * @since 0.0.5
+     */
+    const INSERT_ENTRY = '-5 ||| Entry insertion failure.';
+
+    /**
+     * @since 0.0.5
+     */
+    const NOT_FOUND = '-6 ||| %1$s not found.';
+
+    /**
      * Return error code number.
      * @since 0.0.1
      * 
