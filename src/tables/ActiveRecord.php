@@ -26,6 +26,13 @@ abstract class ActiveRecord implements ActiveRecordInterface
     protected $ar_fields_types = [];
 
     /**
+     * @var array $ar_fields_values
+     * Contains fields values.
+     * @since 0.1.0
+     */
+    protected $ar_fields_values = [];
+
+    /**
      * @since 0.0.7
      */
     public function __set($name, $value)
@@ -33,9 +40,27 @@ abstract class ActiveRecord implements ActiveRecordInterface
         
         if (is_int($value)) $type = '%d';
         elseif (is_float($value)) $type = '%f';
-        else $type = '%s';
+        else {
+            
+            $type = '%s';
+
+            $value = (string)$value;
+        
+        }
 
         $this->ar_fields_types[$name] = $type;
+        $this->ar_fields_values[$name] = $value;
+
+    }
+
+    /**
+     * @since 0.1.0
+     */
+    public function __get($name)
+    {
+        
+        return isset($this->ar_fields_values[$name]) ?
+            $this->ar_fields_values[$name] : NULL;
 
     }
 
@@ -81,7 +106,7 @@ abstract class ActiveRecord implements ActiveRecordInterface
 
         $wpdb = self::wpdb();
 
-        $table_name = self::tableName();
+        $table_name = static::tableName();
 
         $select = $wpdb->get_results(
             $wpdb->prepare(
@@ -102,7 +127,7 @@ abstract class ActiveRecord implements ActiveRecordInterface
             )
         );
 
-        $obj = new self;
+        $obj = new static;
 
         foreach ($select[0] as $key => $value) {
 
@@ -130,23 +155,13 @@ abstract class ActiveRecord implements ActiveRecordInterface
     public function save() : self
     {
 
-        $keys = array_keys($this->ar_fields_types);
-
         $types = array_values($this->ar_fields_types);
-
-        $values = [];
-
-        foreach ($keys as $key) {
-
-            $values[$key] = $this->$key;
-
-        }
 
         $wpdb = $this->wpdb();
 
         if ($wpdb->replace(
             $wpdb->prefix.$this->tableName(),
-            $values,
+            $this->ar_fields_values,
             $types
         ) === false) throw new ActiveRecordException(
             sprintf(ActiveRecordException::pickMessage(
@@ -167,7 +182,7 @@ abstract class ActiveRecord implements ActiveRecordInterface
     public static function where(array $conditions) : ActiveRecordSelectInterface
     {
 
-        return (new ActiveRecordSelect(self::class))->where($conditions);
+        return (new ActiveRecordSelect(static::class))->where($conditions);
 
     }
 
@@ -177,7 +192,7 @@ abstract class ActiveRecord implements ActiveRecordInterface
     public static function order(array $conditions) : ActiveRecordSelectInterface
     {
 
-        return (new ActiveRecordSelect(self::class))->order($conditions);
+        return (new ActiveRecordSelect(static::class))->order($conditions);
 
     }
 
@@ -187,7 +202,7 @@ abstract class ActiveRecord implements ActiveRecordInterface
     public static function limit(int $limit) : ActiveRecordSelectInterface
     {
 
-        return (new ActiveRecordSelect(self::class))->limit($limit);
+        return (new ActiveRecordSelect(static::class))->limit($limit);
 
     }
 

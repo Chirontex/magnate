@@ -261,36 +261,44 @@ abstract class Migration
             MigrationException::pickCode(MigrationException::CREATE_TABLE)
         );
 
-        foreach ($this->entries as $i => $entry) {
+        if (empty($this->wpdb->get_results(
+            "SELECT *
+                FROM `".$this->wpdb->prefix.$this->table_name."`",
+            ARRAY_A
+        ))) {
 
-            $types = [];
+            foreach ($this->entries as $i => $entry) {
 
-            foreach ($entry as $key => $value) {
+                $types = [];
 
-                if (is_int($value)) $types[] = '%d';
-                elseif (is_float($value)) $types[] = '%f';
-                else {
+                foreach ($entry as $key => $value) {
 
-                    $this->entries[$i][$key] = (string)$value;
+                    if (is_int($value)) $types[] = '%d';
+                    elseif (is_float($value)) $types[] = '%f';
+                    else {
 
-                    $types[] = '%s';
+                        $this->entries[$i][$key] = (string)$value;
+
+                        $types[] = '%s';
+
+                    }
 
                 }
 
-            }
+                if ($this->wpdb->insert(
+                        $this->wpdb->prefix.$this->table_name,
+                        $entry,
+                        $types
+                    ) === false) throw new MigrationException(
+                    sprintf(MigrationException::pickMessage(
+                        MigrationException::ENTRY
+                    ), 'insertion'),
+                    MigrationException::pickCode(
+                        MigrationException::ENTRY
+                    )
+                );
 
-            if ($this->wpdb->insert(
-                    $this->wpdb->prefix.$this->table_name,
-                    $entry,
-                    $types
-                ) === false) throw new MigrationException(
-                sprintf(MigrationException::pickMessage(
-                    MigrationException::ENTRY
-                ), 'insertion'),
-                MigrationException::pickCode(
-                    MigrationException::ENTRY
-                )
-            );
+            }
 
         }
 

@@ -101,7 +101,7 @@ class ActiveRecordSelect implements ActiveRecordSelectInterface
 
             for ($i = 0; $i < count($condition); $i++) {
 
-                $key = $this->wpdb->prepare("%s", (string)$keys[$i]);
+                $key = $keys[$i];
 
                 $where .= $i === 0 ? "" : " AND";
                 $where .= " t.".$key." ";
@@ -147,10 +147,6 @@ class ActiveRecordSelect implements ActiveRecordSelectInterface
         $order = "";
 
         foreach ($conditions as $key => $cond) {
-
-            $key = $this->wpdb->prepare("%s", (string)$key);
-
-            $cond = $this->wpdb->prepare("%s", (string)$cond);
 
             $order .= empty($order) ? " ORDER BY" : ", ";
 

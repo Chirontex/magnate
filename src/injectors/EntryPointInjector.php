@@ -58,10 +58,10 @@ class EntryPointInjector implements EntryPointInjectorInterface
 
         $this->wpdb = $wpdb;
 
-        if (is_dir($path)) throw new EntryPointInjectorException(
-            EntryPointInjectorException::pickMessage(
+        if (!is_dir($path)) throw new EntryPointInjectorException(
+            sprintf(EntryPointInjectorException::pickMessage(
                 EntryPointInjectorException::NOT_DIR
-            ),
+            ), $path),
             EntryPointInjectorException::pickCode(
                 EntryPointInjectorException::NOT_DIR
             )
