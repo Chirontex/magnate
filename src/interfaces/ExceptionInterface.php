@@ -35,7 +35,7 @@ interface ExceptionInterface
     /**
      * @since 0.0.5
      */
-    const INSERT_ENTRY = '-5 ||| Entry insertion failure.';
+    const ENTRY = '-5 ||| Entry %1$s failure.';
 
     /**
      * @since 0.0.5

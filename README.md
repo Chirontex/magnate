@@ -1,9 +1,7 @@
-# Magnate 0.0.8
+# Magnate 0.0.9
 
 ## TODO
 
 1. Add AdminPage and GlobalHandler classes which extends EntryPoint.
 
-2. Add Active Record implementation.
-
-3. Add Relocator class and Noticer trait.
+2. Add Relocator class and Noticer trait.
