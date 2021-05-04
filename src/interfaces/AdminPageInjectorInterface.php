@@ -47,6 +47,74 @@ interface AdminPageInjectorInterface
         string $position = '');
 
     /**
+     * Add an additional JS script to page.
+     * @since 0.6.5
+     * 
+     * @param string $name
+     * Script unique name.
+     * 
+     * @param string $src
+     * Source.
+     * 
+     * @param array $dependencies
+     * Scripts to be loaded before this script.
+     * 
+     * @param string version
+     * Script version.
+     * 
+     * @param bool $in_footer
+     * Determines whether to add script to footer.
+     */
+    public function addScript(
+        string $name,
+        string $src,
+        array $dependecies = [],
+        string $version = '',
+        bool $in_footer = false) : self;
+
+    /**
+     * Add an additional CSS to page.
+     * @since 0.6.5
+     * 
+     * @param string $name
+     * Style unique name.
+     * 
+     * @param string $src
+     * Source.
+     * 
+     * @param array $dependencies
+     * Styles to be loaded before this style.
+     * 
+     * @param string $version
+     * Style version.
+     * 
+     * @param string $media
+     * Value for the 'media' atribute.
+     */
+    public function addStyle(
+        string $name,
+        string $src,
+        array $dependecies = [],
+        string $version = '',
+        string $media = 'all') : self;
+
+    /**
+     * Get scripts.
+     * @since 0.6.5
+     * 
+     * @return array
+     */
+    public function getScripts() : array;
+
+    /**
+     * Get styles.
+     * @since 0.6.5
+     * 
+     * @return array
+     */
+    public function getStyles() : array;
+
+    /**
      * Get slug.
      * @since 0.4.0
      * 

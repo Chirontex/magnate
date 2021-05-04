@@ -72,6 +72,20 @@ class AdminPageInjector implements AdminPageInjectorInterface
     protected $position = '';
 
     /**
+     * @var array $scripts
+     * Additional JS scripts.
+     * @since 0.6.5
+     */
+    protected $scripts = [];
+
+    /**
+     * @var array $styles
+     * Additional CSS styles.
+     * @since 0.6.5
+     */
+    protected $styles = [];
+
+    /**
      * @since 0.4.0
      */
     public function __construct(
@@ -120,6 +134,102 @@ class AdminPageInjector implements AdminPageInjectorInterface
         $this->parent_slug = $parent_slug;
         $this->icon = $icon;
         $this->position = $position;
+
+    }
+
+    /**
+     * @since 0.6.5
+     */
+    public function addScript(
+        string $name,
+        string $src,
+        array $dependecies = [],
+        string $version = '',
+        bool $in_footer = false) : self
+    {
+
+        $empty = '';
+
+        if (empty($name)) $empty = 'Name';
+        elseif (empty($src)) $empty = 'Source';
+
+        if (!empty($empty)) throw new AdminPageInjectorException(
+            sprintf(AdminPageInjectorException::pickMessage(
+                AdminPageInjectorException::EMPTY
+            ), $empty),
+            AdminPageInjectorException::pickCode(
+                AdminPageInjectorException::EMPTY
+            )
+        );
+
+        $version = empty($version) ? false : $version;
+
+        $this->scripts[$name] = [
+            'src' => $src,
+            'deps' => $dependecies,
+            'ver' => $version,
+            'footer' => $in_footer
+        ];
+
+        return $this;
+
+    }
+
+    /**
+     * @since 0.6.5
+     */
+    public function addStyle(
+        string $name,
+        string $src,
+        array $dependecies = [],
+        string $version = '',
+        string $media = 'all') : self
+    {
+
+        $empty = '';
+
+        if (empty($name)) $empty = 'Name';
+        elseif (empty($src)) $empty = 'Source';
+
+        if (!empty($empty)) throw new AdminPageInjectorException(
+            sprintf(AdminPageInjectorException::pickMessage(
+                AdminPageInjectorException::EMPTY
+            ), $empty),
+            AdminPageInjectorException::pickCode(
+                AdminPageInjectorException::EMPTY
+            )
+        );
+
+        $version = empty($version) ? false : $version;
+
+        $this->styles[$name] = [
+            'src' => $src,
+            'deps' => $dependecies,
+            'ver' => $version,
+            'media' => $media
+        ];
+
+        return $this;
+
+    }
+
+    /**
+     * @since 0.6.5
+     */
+    public function getScripts() : array
+    {
+
+        return $this->scripts;
+
+    }
+
+    /**
+     * @since 0.6.5
+     */
+    public function getStyles() : array
+    {
+
+        return $this->styles;
 
     }
 

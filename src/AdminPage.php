@@ -73,6 +73,20 @@ abstract class AdminPage extends EntryPoint
     protected $position = '';
 
     /**
+     * @var array $scripts
+     * Page JS scripts.
+     * @since 0.6.5
+     */
+    protected $scripts = [];
+
+    /**
+     * @var array $styles
+     * Page CSS styles.
+     * @since 0.6.5
+     */
+    protected $styles = [];
+
+    /**
      * @since 0.5.0
      * 
      * @param EntryPointInjector $ep_injector
@@ -92,8 +106,26 @@ abstract class AdminPage extends EntryPoint
         $this->parent_slug = $ap_injector->getParentSlug();
         $this->icon = $ap_injector->getIcon();
         $this->position = $ap_injector->getPosition();
+        $this->scripts = $ap_injector->getScripts();
+        $this->styles = $ap_injector->getStyles();
         
         parent::__construct($ep_injector);
+
+        if (empty($this->parent_slug)) $this->addToMenu();
+        else $this->addToSubmenu();
+
+        if (strpos($_SERVER['REQUEST_URI'], 'wp-admin') !== false &&
+            isset($_GET['page'])) {
+
+            if ($_GET['page'] === $this->slug) {
+
+                if (!empty($this->scripts)) $this->enqueueScripts();
+
+                if (!empty($this->styles)) $this->enqueueStyles();
+
+            }
+
+        }
 
     }
 
@@ -122,7 +154,9 @@ abstract class AdminPage extends EntryPoint
                 $this->position
             );
 
-            remove_submenu_page($this->slug, $this->slug);
+            if (empty(
+                $this->view
+            )) remove_submenu_page($this->slug, $this->slug);
 
         });
 
@@ -181,6 +215,64 @@ abstract class AdminPage extends EntryPoint
         do_action('magnate-adminpage-notice');
 
         require_once $this->view;
+
+        return $this;
+
+    }
+
+    /**
+     * Add scripts to enqueue.
+     * @since 0.6.5
+     * 
+     * @return $this
+     */
+    protected function enqueueScripts() : self
+    {
+
+        add_action('admin_enqueue_scripts', function() {
+
+            foreach ($this->scripts as $handle => $props) {
+
+                wp_enqueue_script(
+                    $handle,
+                    $props['src'],
+                    $props['deps'],
+                    $props['ver'],
+                    $props['footer']
+                );
+
+            }
+
+        });
+
+        return $this;
+
+    }
+
+    /**
+     * Add styles to enqueue.
+     * @since 0.6.5
+     * 
+     * @return $this
+     */
+    protected function enqueueStyles() : self
+    {
+
+        add_action('admin_enqueue_scripts', function() {
+
+            foreach ($this->styles as $handle => $props) {
+
+                wp_enqueue_style(
+                    $handle,
+                    $props['src'],
+                    $props['deps'],
+                    $props['ver'],
+                    $props['media']
+                );
+
+            }
+
+        });
 
         return $this;
 
