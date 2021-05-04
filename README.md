@@ -1,4 +1,4 @@
-# Magnate 0.3.0
+# Magnate 0.4.0
 
 ## TODO
 
@@ -13,6 +13,8 @@
 You can create an entry point class by inheriting **\Magnate\EntryPoint**. An entry point class intended for create a singleton that contains all or significant part of the plugin logic.
 
 The init() method can be overrided if you want to add some logic to object construction.
+
+You must create **\Magnate\Injectors\EntryPointInjector** instance before create an entry point object. It is pretty simple: all you need is a root directory and URL of your plugin.
 
 **NOTICE:** The init() method must be protected and return *$this*.
 
