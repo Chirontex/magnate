@@ -1,0 +1,29 @@
+{
+    "name": "Magnate",
+    "type": "framework",
+    "description": "Framework for WordPress plugin development.",
+    "keywords": ["wordpress", "framework", "activerecord", "plugin"],
+    "homepage": "https://github.com/chirontex/magnate",
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "Dmitry Shumilin",
+            "email": "chirontex@yandex.com",
+            "homepage": "https://chirontex.github.io",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Magnate": "src",
+            "Magnate\\Tables": "src/tables",
+            "Magnate\\Interfaces": "src/interfaces",
+            "Magnate\\Injectors": "src/injectors",
+            "Magnate\\Helpers": "src/helpers",
+            "Magnate\\Exceptions": "src/exceptions"
+        }
+    }
+}

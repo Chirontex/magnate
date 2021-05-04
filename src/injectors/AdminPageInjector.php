@@ -96,7 +96,7 @@ class AdminPageInjector implements AdminPageInjectorInterface
         $capability,
         string $parent_slug = '',
         string $icon = '',
-        string $position = '')
+        $position = '')
     {
         
         $empty = '';
@@ -125,6 +125,11 @@ class AdminPageInjector implements AdminPageInjectorInterface
             );
 
         }
+
+        if (!is_int($position) &&
+            !is_float($position)) $position = (string)$position;
+
+        if (empty($position)) $position = NULL;
 
         $this->slug = $slug;
         $this->view = $view;

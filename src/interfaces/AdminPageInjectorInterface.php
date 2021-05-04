@@ -35,6 +35,9 @@ interface AdminPageInjectorInterface
      * 
      * @param string $icon
      * Path to icon. Optional.
+     * 
+     * @param int|float|string $position
+     * Menu item position.
      */
     public function __construct(
         string $slug,
@@ -44,7 +47,7 @@ interface AdminPageInjectorInterface
         $capability,
         string $parent_slug = '',
         string $icon = '',
-        string $position = '');
+        $position = '');
 
     /**
      * Add an additional JS script to page.
