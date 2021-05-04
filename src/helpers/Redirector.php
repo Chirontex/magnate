@@ -57,7 +57,7 @@ class Redirector
         $this->url = $url;
         $this->code = $code;
 
-        add_action('wp_headers', function($headers) {
+        add_filter('wp_headers', function($headers) {
 
             $headers = [];
             $headers['Location'] = $this->url;
