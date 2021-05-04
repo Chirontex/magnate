@@ -19,11 +19,11 @@
     "autoload": {
         "psr-4": {
             "Magnate": "src",
-            "Magnate\\Tables": "src/tables",
-            "Magnate\\Interfaces": "src/interfaces",
-            "Magnate\\Injectors": "src/injectors",
-            "Magnate\\Helpers": "src/helpers",
-            "Magnate\\Exceptions": "src/exceptions"
+            "Magnate\\Tables\\": "src/tables",
+            "Magnate\\Interfaces\\": "src/interfaces",
+            "Magnate\\Injectors\\": "src/injectors",
+            "Magnate\\Helpers\\": "src/helpers",
+            "Magnate\\Exceptions\\": "src/exceptions"
         }
     }
 }
