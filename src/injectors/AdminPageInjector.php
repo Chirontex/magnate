@@ -20,14 +20,14 @@ class AdminPageInjector implements AdminPageInjectorInterface
      * Page slug.
      * @since 0.4.0
      */
-    protected $slug;
+    protected $slug = '';
 
     /**
      * @var string $view
      * Path to the page view.
      * @since 0.4.0
      */
-    protected $view;
+    protected $view = '';
 
     /**
      * @var string $page_title
@@ -65,6 +65,13 @@ class AdminPageInjector implements AdminPageInjectorInterface
     protected $icon = '';
 
     /**
+     * @var int|float|string $position
+     * Menu item position.
+     * @since 0.5.0
+     */
+    protected $position = '';
+
+    /**
      * @since 0.4.0
      */
     public function __construct(
@@ -74,13 +81,13 @@ class AdminPageInjector implements AdminPageInjectorInterface
         string $menu_title,
         $capability,
         string $parent_slug = '',
-        string $icon = '')
+        string $icon = '',
+        string $position = '')
     {
         
         $empty = '';
 
         if (empty($slug)) $empty = 'Slug';
-        elseif (empty($view)) $empty = 'View path';
         elseif (empty($page_title)) $empty = 'Page title';
         elseif (empty($menu_title)) $empty = 'Menu title';
         elseif (is_string($capability) &&
@@ -95,11 +102,15 @@ class AdminPageInjector implements AdminPageInjectorInterface
             )
         );
 
-        if (substr($view, -4) !== '.php') throw new AdminPageInjectorException(
-            sprintf(AdminPageInjectorException::pickMessage(
-                AdminPageInjectorException::NOT_TYPE
-            ), 'View', 'PHP file')
-        );
+        if (!empty($view)) {
+
+            if (substr($view, -4) !== '.php') throw new AdminPageInjectorException(
+                sprintf(AdminPageInjectorException::pickMessage(
+                    AdminPageInjectorException::NOT_TYPE
+                ), 'View', 'PHP file')
+            );
+
+        }
 
         $this->slug = $slug;
         $this->view = $view;
@@ -108,6 +119,7 @@ class AdminPageInjector implements AdminPageInjectorInterface
         $this->capability = $capability;
         $this->parent_slug = $parent_slug;
         $this->icon = $icon;
+        $this->position = $position;
 
     }
 
@@ -178,6 +190,16 @@ class AdminPageInjector implements AdminPageInjectorInterface
     {
 
         return $this->icon;
+
+    }
+
+    /**
+     * @since 0.5.0
+     */
+    public function getPosition()
+    {
+
+        return $this->position;
 
     }
 

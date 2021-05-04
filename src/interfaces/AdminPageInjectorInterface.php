@@ -43,7 +43,8 @@ interface AdminPageInjectorInterface
         string $menu_title,
         $capability,
         string $parent_slug = '',
-        string $icon = '');
+        string $icon = '',
+        string $position = '');
 
     /**
      * Get slug.
@@ -100,5 +101,13 @@ interface AdminPageInjectorInterface
      * @return string
      */
     public function getIcon() : string;
+
+    /**
+     * Get menu item position.
+     * @since 0.5.0
+     * 
+     * @return int|float|string
+     */
+    public function getPosition();
 
 }
