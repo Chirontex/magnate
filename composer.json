@@ -1,9 +1,10 @@
 {
     "name": "magnate/magnate",
+    "version": "0.8.3",
     "type": "framework",
     "description": "Framework for WordPress plugin development.",
     "keywords": ["wordpress", "framework", "activerecord", "plugin"],
-    "homepage": "https://github.com/chirontex/magnate",
+    "homepage": "https://github.com/magnatefw/magnate",
     "license": "GPL-3.0",
     "authors": [
         {

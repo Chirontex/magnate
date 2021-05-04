@@ -37,7 +37,7 @@ class Redirector
      * @param int $code
      * Refirection code.
      */
-    public function __construct(string $url, int $code)
+    public function __construct(string $url, int $code = 302)
     {
         
         if (empty($url)) throw new RedirectorException(
