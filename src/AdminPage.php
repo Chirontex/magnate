@@ -115,16 +115,7 @@ abstract class AdminPage extends EntryPoint
                 $this->slug,
                 function() {
 
-                    if (!empty($this->view)) {
-
-                        $path = $this->path;
-                        $url = $this->url;
-
-                        do_action('magnate-adminpage-notice');
-
-                        require_once $this->view;
-
-                    }
+                    if (!empty($this->view)) $this->plugView();
 
                 },
                 $this->icon,
@@ -134,6 +125,62 @@ abstract class AdminPage extends EntryPoint
             remove_submenu_page($this->slug, $this->slug);
 
         });
+
+        return $this;
+
+    }
+
+    /**
+     * Add page to submenu.
+     * @since 0.6.0
+     * 
+     * @return $this
+     */
+    protected function addToSubmenu() : self
+    {
+
+        add_action('admin_menu', function() {
+
+            $menu_title = empty($this->icon) ?
+                '' : file_get_contents($this->icon).' ';
+            $menu_title .= $this->menu_title;
+
+            add_submenu_page(
+                $this->parent_slug,
+                $this->page_title,
+                $menu_title,
+                $this->capability,
+                $this->slug,
+                function() {
+
+                    if (!empty($this->view)) $this->plugView();
+
+                },
+                $this->position
+            );
+
+        });
+
+        return $this;
+
+    }
+
+    /**
+     * Add view to the view callback.
+     * @since 0.6.0
+     * 
+     * @return $this
+     */
+    protected function plugView() : self
+    {
+
+        $path = $this->path;
+        $url = $this->url;
+        $title = $this->page_title;
+
+        do_action('magnate-adminpage-notice');
+
+        require_once $this->view;
 
         return $this;
 
