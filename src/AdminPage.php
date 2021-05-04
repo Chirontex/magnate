@@ -7,6 +7,7 @@ namespace Magnate;
 
 use Magnate\Injectors\EntryPointInjector;
 use Magnate\Injectors\AdminPageInjector;
+use Magnate\Helpers\Noticer;
 
 /**
  * @abstract
@@ -273,6 +274,27 @@ abstract class AdminPage extends EntryPoint
             }
 
         });
+
+        return $this;
+
+    }
+
+    /**
+     * Add the notice.
+     * @since 0.8.0
+     * 
+     * @param string $type
+     * Notice type.
+     * 
+     * @param string $text
+     * Notice text.
+     * 
+     * @return $this
+     */
+    public function notice(string $type, string $text) : self
+    {
+
+        (new Noticer($type, $text))->notice('magnate-adminpage-notice');
 
         return $this;
 

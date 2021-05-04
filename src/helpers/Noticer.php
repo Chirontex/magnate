@@ -35,6 +35,15 @@ class Noticer
      */
     protected $n = '';
 
+    /**
+     * @since 0.7.0
+     * 
+     * @param string $type
+     * Notice type.
+     * 
+     * @param string $text
+     * Notice text.
+     */
     public function __construct(string $type, string $text)
     {
         

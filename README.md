@@ -1,10 +1,8 @@
-# Magnate 0.7.0
+# Magnate 0.8.0
 
 ## TODO
 
-1. Add AdminPage and GlobalHandler classes which extends EntryPoint.
-
-2. Add Relocator class and Noticer trait.
+1. White the docs.
 
 ## How to use
 
