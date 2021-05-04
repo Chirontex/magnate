@@ -1,5 +1,5 @@
 {
-    "name": "Magnate",
+    "name": "magnate/magnate",
     "type": "framework",
     "description": "Framework for WordPress plugin development.",
     "keywords": ["wordpress", "framework", "activerecord", "plugin"],
