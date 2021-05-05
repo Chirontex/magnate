@@ -4,6 +4,8 @@
 
 1. White the docs.
 
+2. Add HAVING and JOIN(?) to Active Record.
+
 ## How to use
 
 ### Entry Point
