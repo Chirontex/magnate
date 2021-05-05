@@ -2,9 +2,9 @@
 
 ## TODO
 
-1. White the docs.
+1. Write the docs.
 
-2. Add HAVING and JOIN(?) to Active Record.
+2. Add GROUP BY, HAVING and JOIN(?) to Active Record.
 
 ## How to use
 
