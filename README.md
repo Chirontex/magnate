@@ -1,8 +1,6 @@
-# Magnate 0.8.6
+# Magnate 0.8.7
 
 ## TODO
-
-1. Test.
 
 2. Write the docs.
 

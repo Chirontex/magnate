@@ -101,7 +101,7 @@ class ActiveRecordSelect implements ActiveRecordSelectInterface
             false) throw new ActiveRecordSelectException(
                 sprintf(ActiveRecordSelectException::pickMessage(
                     ActiveRecordSelectException::NOT_TYPE
-                ), $this->class, 'Magnate\\Interfaces\\ActiveRecordInterface implementer'),
+                ), $class, 'Magnate\\Interfaces\\ActiveRecordInterface implementer'),
                 ActiveRecordSelectException::pickCode(
                     ActiveRecordSelectException::NOT_TYPE
                 )
