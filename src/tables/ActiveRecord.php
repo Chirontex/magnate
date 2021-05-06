@@ -187,16 +187,6 @@ abstract class ActiveRecord implements ActiveRecordInterface
     }
 
     /**
-     * @since 0.0.8
-     */
-    public static function order(array $conditions) : ActiveRecordSelectInterface
-    {
-
-        return (new ActiveRecordSelect(static::class))->order($conditions);
-
-    }
-
-    /**
      * @since 0.8.4
      */
     public static function groupBy(array $conditions) : ActiveRecordSelectInterface
@@ -213,6 +203,16 @@ abstract class ActiveRecord implements ActiveRecordInterface
     {
 
         return (new ActiveRecordSelect(static::class))->having($conditions);
+
+    }
+
+    /**
+     * @since 0.0.8
+     */
+    public static function order(array $conditions) : ActiveRecordSelectInterface
+    {
+
+        return (new ActiveRecordSelect(static::class))->order($conditions);
 
     }
 

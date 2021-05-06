@@ -95,6 +95,18 @@ class ActiveRecordSelect implements ActiveRecordSelectInterface
             )
         );
 
+        if (!is_subclass_of(
+            $class,
+            ActiveRecord::class
+        )) throw new ActiveRecordSelectException(
+            sprintf(ActiveRecordSelectException::pickMessage(
+                ActiveRecordSelectException::NOT_TYPE
+            ), 'The class', 'Mangate\\Tables\\ActiveRecord inheritor'),
+            ActiveRecordSelectException::pickCode(
+                ActiveRecordSelectException::NOT_TYPE
+            )
+        );
+
         $this->class = $class;
         
     }
@@ -153,24 +165,22 @@ class ActiveRecordSelect implements ActiveRecordSelectInterface
     }
 
     /**
-     * @since 0.0.7
-     */
-    public function order(array $conditions) : self
-    {
-
-        $this->order_cond = $this->concat("ORDER BY", $conditions);
-
-        return $this;
-
-    }
-
-    /**
      * @since 0.8.4
      */
     public function groupBy(array $conditions) : self
     {
 
-        $this->group_cond = $this->concat("GROUP BY", $conditions);
+        $group = "";
+
+        foreach ($conditions as $key) {
+
+            $group .= empty($group) ? " GROUP BY" : ",";
+
+            $group .= " t.".$key;
+
+        }
+
+        $this->group_cond = $group;
 
         return $this;
 
@@ -182,18 +192,41 @@ class ActiveRecordSelect implements ActiveRecordSelectInterface
     public function having(array $conditions) : self
     {
 
-        $handled_conds = [];
+        $having = "";
 
         foreach ($conditions as $key => $parts) {
 
-            $handled_conds[$key] = $this->wpdb->prepare(
-                $parts['condition'],
-                $parts['value']
+            $having .= empty($having) ? " HAVING" : ",";
+
+            $having .= " t.".$key." ".$this->wpdb->prepare(
+                $parts['condition'], $parts['value']
             );
 
         }
 
-        $this->having_cond = $this->concat("HAVING", $handled_conds);
+        $this->having_cond = $having;
+
+        return $this;
+
+    }
+
+    /**
+     * @since 0.0.7
+     */
+    public function order(array $conditions) : self
+    {
+
+        $order = "";
+
+        foreach ($conditions as $key => $cond) {
+
+            $order .= empty($order) ? " ORDER BY" : ",";
+
+            $order .= " t.".$key." ".$cond;
+
+        }
+
+        $this->order_cond = $order;
 
         return $this;
 
@@ -273,35 +306,6 @@ class ActiveRecordSelect implements ActiveRecordSelectInterface
     {
 
         return $this->get()->last();
-
-    }
-
-    /**
-     * Concatenation for ORDER BY and GROUP BY expressions.
-     * @since 0.8.4
-     * 
-     * @param string $expression
-     * String start phrase.
-     * 
-     * @param array $members
-     * Members need to be concatenated.
-     * 
-     * @return string
-     */
-    protected function concat(string $expression, array $members) : string
-    {
-
-        $result = "";
-
-        foreach ($members as $key => $value) {
-
-            $result .= empty($result) ? " ".$expression : ",";
-
-            $result .= " t.".$key." ".$value;
-
-        }
-
-        return $result;
 
     }
 

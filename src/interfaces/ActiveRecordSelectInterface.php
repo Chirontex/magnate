@@ -32,17 +32,6 @@ interface ActiveRecordSelectInterface
     public function where(array $conditions) : self;
 
     /**
-     * Add ORDER BY condition.
-     * @since 0.0.7
-     * 
-     * @param array $conditions
-     * Associative array with conditions.
-     * 
-     * @return $this
-     */
-    public function order(array $conditions) : self;
-
-    /**
      * Add GROUP BY condition.
      * @since 0.8.4
      * 
@@ -63,6 +52,17 @@ interface ActiveRecordSelectInterface
      * @return $this
      */
     public function having(array $conditions) : self;
+
+    /**
+     * Add ORDER BY condition.
+     * @since 0.0.7
+     * 
+     * @param array $conditions
+     * Associative array with conditions.
+     * 
+     * @return $this
+     */
+    public function order(array $conditions) : self;
 
     /**
      * Add LIMIT condition.
