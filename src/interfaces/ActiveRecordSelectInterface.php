@@ -43,6 +43,28 @@ interface ActiveRecordSelectInterface
     public function order(array $conditions) : self;
 
     /**
+     * Add GROUP BY condition.
+     * @since 0.8.4
+     * 
+     * @param array $conditions
+     * Associative array with conditions.
+     * 
+     * @return $this
+     */
+    public function groupBy(array $conditions) : self;
+
+    /**
+     * Add HAVING condition.
+     * @since 0.8.4
+     * 
+     * @param string $conditions
+     * Associative array with conditions.
+     * 
+     * @return $this
+     */
+    public function having(array $conditions) : self;
+
+    /**
      * Add LIMIT condition.
      * @since 0.0.7
      * 

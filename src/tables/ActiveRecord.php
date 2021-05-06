@@ -197,6 +197,26 @@ abstract class ActiveRecord implements ActiveRecordInterface
     }
 
     /**
+     * @since 0.8.4
+     */
+    public static function groupBy(array $conditions) : ActiveRecordSelectInterface
+    {
+
+        return (new ActiveRecordSelect(static::class))->groupBy($conditions);
+
+    }
+
+    /**
+     * @since 0.8.4
+     */
+    public static function having(array $conditions) : ActiveRecordSelectInterface
+    {
+
+        return (new ActiveRecordSelect(static::class))->having($conditions);
+
+    }
+
+    /**
      * @since 0.0.8
      */
     public static function limit(int $limit) : ActiveRecordSelectInterface

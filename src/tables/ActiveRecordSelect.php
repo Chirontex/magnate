@@ -40,6 +40,20 @@ class ActiveRecordSelect implements ActiveRecordSelectInterface
     protected $where_cond = '';
 
     /**
+     * @var string $group_cond
+     * Group conditions.
+     * @since 0.8.4
+     */
+    protected $group_cond = '';
+
+    /**
+     * @var string $having_cond
+     * Having conditions.
+     * @since 0.8.4
+     */
+    protected $having_cond = '';
+
+    /**
      * @var string $order_cond
      * Order conditions.
      * @since 0.0.7
@@ -144,17 +158,42 @@ class ActiveRecordSelect implements ActiveRecordSelectInterface
     public function order(array $conditions) : self
     {
 
-        $order = "";
+        $this->order_cond = $this->concat("ORDER BY", $conditions);
 
-        foreach ($conditions as $key => $cond) {
+        return $this;
 
-            $order .= empty($order) ? " ORDER BY" : ", ";
+    }
 
-            $order .= " t.".$key." ".$cond;
+    /**
+     * @since 0.8.4
+     */
+    public function groupBy(array $conditions) : self
+    {
+
+        $this->group_cond = $this->concat("GROUP BY", $conditions);
+
+        return $this;
+
+    }
+
+    /**
+     * @since 0.8.4
+     */
+    public function having(array $conditions) : self
+    {
+
+        $handled_conds = [];
+
+        foreach ($conditions as $key => $parts) {
+
+            $handled_conds[$key] = $this->wpdb->prepare(
+                $parts['condition'],
+                $parts['value']
+            );
 
         }
 
-        $this->order_cond = $order;
+        $this->having_cond = $this->concat("HAVING", $handled_conds);
 
         return $this;
 
@@ -182,7 +221,8 @@ class ActiveRecordSelect implements ActiveRecordSelectInterface
             "SELECT *
                 FROM `".$this->wpdb->prefix.
                     $this->class::tableName()."` AS t".
-                $this->where_cond.$this->order_cond.$this->limit_cond,
+                $this->where_cond.$this->group_cond.$this->having_cond.
+                    $this->order_cond.$this->limit_cond,
             ARRAY_A
         );
 
@@ -233,6 +273,35 @@ class ActiveRecordSelect implements ActiveRecordSelectInterface
     {
 
         return $this->get()->last();
+
+    }
+
+    /**
+     * Concatenation for ORDER BY and GROUP BY expressions.
+     * @since 0.8.4
+     * 
+     * @param string $expression
+     * String start phrase.
+     * 
+     * @param array $members
+     * Members need to be concatenated.
+     * 
+     * @return string
+     */
+    protected function concat(string $expression, array $members) : string
+    {
+
+        $result = "";
+
+        foreach ($members as $key => $value) {
+
+            $result .= empty($result) ? " ".$expression : ",";
+
+            $result .= " t.".$key." ".$value;
+
+        }
+
+        return $result;
 
     }
 

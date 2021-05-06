@@ -67,6 +67,28 @@ interface ActiveRecordInterface
     public static function order(array $conditions) : ActiveRecordSelectInterface;
 
     /**
+     * Create an ActiveRecordSelect instance and calls its groupBy() method.
+     * @since 0.8.4
+     * 
+     * @param array $conditions
+     * GROUP BY conditions.
+     * 
+     * @return ActiveRecordSelectInterface
+     */
+    public static function groupBy(array $conditions) : ActiveRecordSelectInterface;
+
+    /**
+     * Create an ActiveRecordSelect instance and calls its having() method.
+     * @since 0.8.4
+     * 
+     * @param array $conditions
+     * HAVING conditions.
+     * 
+     * @return ActiveRecordSelectInterface
+     */
+    public static function having(array $conditions) : ActiveRecordSelectInterface;
+
+    /**
      * Create an ActiveRecordSelect instance and calls its limit() method.
      * @since 0.0.8
      * 

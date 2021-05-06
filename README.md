@@ -1,10 +1,12 @@
-# Magnate 0.8.3
+# Magnate 0.8.4
 
 ## TODO
 
-1. Write the docs.
+1. Test.
 
-2. Add GROUP BY, HAVING and JOIN(?) to Active Record.
+2. Write the docs.
+
+3. Add JOIN to Active Record. (?)
 
 ## How to use
 
