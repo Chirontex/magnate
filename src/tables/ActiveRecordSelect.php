@@ -95,18 +95,6 @@ class ActiveRecordSelect implements ActiveRecordSelectInterface
             )
         );
 
-        if (!is_subclass_of(
-            $class,
-            ActiveRecord::class
-        )) throw new ActiveRecordSelectException(
-            sprintf(ActiveRecordSelectException::pickMessage(
-                ActiveRecordSelectException::NOT_TYPE
-            ), 'The class', 'Mangate\\Tables\\ActiveRecord inheritor'),
-            ActiveRecordSelectException::pickCode(
-                ActiveRecordSelectException::NOT_TYPE
-            )
-        );
-
         $this->class = $class;
         
     }
@@ -264,6 +252,15 @@ class ActiveRecordSelect implements ActiveRecordSelectInterface
         foreach ($select as $row) {
 
             $obj = new $this->class;
+
+            if (!($obj instanceof ActiveRecordInterface)) throw new ActiveRecordSelectException(
+                sprintf(ActiveRecordSelectException::pickMessage(
+                    ActiveRecordSelectException::NOT_TYPE
+                ), $this->class, 'Magnate\\Interfaces\\ActiveRecordInterface implementer'),
+                ActiveRecordSelectException::pickCode(
+                    ActiveRecordSelectException::NOT_TYPE
+                )
+            );
 
             foreach ($row as $key => $value) {
 
