@@ -226,7 +226,17 @@ abstract class Migration
 
             foreach ($entities as $key => $props) {
 
-                $result .= ", ".sprintf($format, $key, $props);
+                if (strpos($props, '|||') !== false) {
+
+                    $props = explode('|||', $props);
+
+                    $add = trim($props[1]);
+
+                    $props = trim($props[0]);
+
+                }
+
+                $result .= ", ".sprintf($format." ".$add, $key, $props);
 
             }
 
@@ -243,7 +253,7 @@ abstract class Migration
         $indexes = call_user_func(
             $fn,
             $this->indexes,
-            "%2\$s (`%1\$s`)"
+            "%2\$s `%1\$s` (`%1\$s`)"
         );
 
         if ($this->wpdb->query(
