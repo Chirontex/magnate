@@ -230,13 +230,13 @@ abstract class Migration
 
                     $props = explode('|||', $props);
 
-                    $add = trim($props[1]);
+                    $add = empty($props[1]) ? '' : " ".trim($props[1]);
 
                     $props = trim($props[0]);
 
                 }
 
-                $result .= ", ".sprintf($format." ".$add, $key, $props);
+                $result .= ", ".sprintf($format.$add, $key, $props);
 
             }
 
