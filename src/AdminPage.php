@@ -110,7 +110,9 @@ abstract class AdminPage extends EntryPoint
         $this->scripts = $ap_injector->getScripts();
         $this->styles = $ap_injector->getStyles();
         
-        parent::__construct($ep_injector);
+        $this->wpdb = $ep_injector->getWpdb();
+        $this->path = $ep_injector->getPath();
+        $this->url = $ep_injector->getUrl();
 
         if (empty($this->parent_slug)) $this->addToMenu();
         else $this->addToSubmenu();
@@ -123,6 +125,8 @@ abstract class AdminPage extends EntryPoint
                 if (!empty($this->scripts)) $this->enqueueScripts();
 
                 if (!empty($this->styles)) $this->enqueueStyles();
+
+                $this->init();
 
             }
 
