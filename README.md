@@ -1,4 +1,4 @@
-# Magnate 0.9.0
+# Magnate 0.9.1
 
 ## TODO
 
