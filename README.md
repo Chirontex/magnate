@@ -1,6 +1,8 @@
-# Magnate 0.9.1
+# Magnate 0.9.2
 
 ## TODO
+
+1. Testing.
 
 2. Write the docs.
 

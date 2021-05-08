@@ -32,6 +32,17 @@ interface ActiveRecordSelectInterface
     public function where(array $conditions) : self;
 
     /**
+     * Add ESCAPE expression.
+     * @since 0.9.2
+     * 
+     * @param string $character
+     * Escaping character.
+     * 
+     * @return $this
+     */
+    public function escape(string $character) : self;
+
+    /**
      * Add GROUP BY condition.
      * @since 0.8.4
      * 

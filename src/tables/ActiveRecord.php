@@ -69,6 +69,8 @@ abstract class ActiveRecord implements ActiveRecordInterface
      * @since 0.0.5
      * 
      * @return wpdb
+     * 
+     * @throws Magnate\Exceptions\ActiveRecordException
      */
     protected static function wpdb() : wpdb
     {
@@ -89,22 +91,18 @@ abstract class ActiveRecord implements ActiveRecordInterface
     }
 
     /**
-     * @since 0.0.5
+     * Return raw data fro wpdb::get_results().
+     * @since 0.9.2
+     * 
+     * @param int $id
+     * Entry ID.
+     * 
+     * @return array
      */
-    public static function tableName() : string
+    protected static function getRawData(int $id) : array
     {
 
-        return '';
-
-    }
-
-    /**
-     * @since 0.0.5
-     */
-    public static function find(int $id) : self
-    {
-
-        $wpdb = self::wpdb();
+        $wpdb = static::wpdb();
 
         $table_name = static::tableName();
 
@@ -118,7 +116,32 @@ abstract class ActiveRecord implements ActiveRecordInterface
             ARRAY_A
         );
 
-        if (empty($select)) throw new ActiveRecordException(
+        if (empty($select)) return [];
+        else return $select[0];
+
+    }
+
+    /**
+     * @since 0.0.5
+     */
+    public static function tableName() : string
+    {
+
+        return '';
+
+    }
+
+    /**
+     * @since 0.0.5
+     * 
+     * @throws Magnate\Exceptions\ActiveRecordException
+     */
+    public static function find(int $id) : self
+    {
+
+        $data = static::getRawData($id);
+
+        if (empty($data)) throw new ActiveRecordException(
             sprintf(ActiveRecordException::pickMessage(
                 ActiveRecordException::NOT_FOUND
             ), 'Entry'),
@@ -129,7 +152,7 @@ abstract class ActiveRecord implements ActiveRecordInterface
 
         $obj = new static;
 
-        foreach ($select[0] as $key => $value) {
+        foreach ($data as $key => $value) {
 
             $obj->$key = $value;
 
@@ -145,12 +168,34 @@ abstract class ActiveRecord implements ActiveRecordInterface
     public function refresh() : self
     {
 
-        return $this->find($this->id);
+        $data = $this->getRawData((int)$this->id);
+
+        if (empty($data)) throw new ActiveRecordException(
+            sprintf(ActiveRecordException::pickMessage(
+                ActiveRecordException::NOT_FOUND
+            ), 'Entry'),
+            ActiveRecordException::pickCode(
+                ActiveRecordException::NOT_FOUND
+            )
+        );
+
+        $this->ar_fields_types = [];
+        $this->ar_fields_values = [];
+
+        foreach ($data as $key => $value) {
+
+            $this->$key = $value;
+
+        }
+
+        return $this;
 
     }
 
     /**
      * @since 0.0.8
+     * 
+     * @throws Magnate\Exceptions\ActiveRecordException
      */
     public function save() : self
     {
@@ -183,6 +228,16 @@ abstract class ActiveRecord implements ActiveRecordInterface
     {
 
         return (new ActiveRecordSelect(static::class))->where($conditions);
+
+    }
+
+    /**
+     * @since 0.9.2
+     */
+    public static function escape(string $character) : ActiveRecordSelectInterface
+    {
+
+        return (new ActiveRecordSelect(static::class))->escape($character);
 
     }
 

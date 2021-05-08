@@ -56,6 +56,17 @@ interface ActiveRecordInterface
     public static function where(array $conditions) : ActiveRecordSelectInterface;
 
     /**
+     * Create an ActiveRecordSelect instance and calls its escape() method.
+     * @since 0.9.2
+     * 
+     * @param string $character
+     * Escaping character.
+     * 
+     * @return ActiveRecordSelectInterface
+     */
+    public static function escape(string $character) : ActiveRecordSelectInterface;
+
+    /**
      * Create an ActiveRecordSelect instance and calls its groupBy() method.
      * @since 0.8.4
      * 

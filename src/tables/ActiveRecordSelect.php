@@ -40,6 +40,13 @@ class ActiveRecordSelect implements ActiveRecordSelectInterface
     protected $where_cond = '';
 
     /**
+     * @var string $escape_cond
+     * ESCAPE expression.
+     * @since 0.9.2
+     */
+    protected $escape_exp = '';
+
+    /**
      * @var string $group_cond
      * Group conditions.
      * @since 0.8.4
@@ -165,6 +172,18 @@ class ActiveRecordSelect implements ActiveRecordSelectInterface
     }
 
     /**
+     * @since 0.9.2
+     */
+    public function escape(string $character) : self
+    {
+
+        $this->escape_exp = $this->wpdb->prepare(" ESCAPE %s", $character);
+
+        return $this;
+
+    }
+
+    /**
      * @since 0.8.4
      */
     public function groupBy(array $conditions) : self
@@ -254,8 +273,8 @@ class ActiveRecordSelect implements ActiveRecordSelectInterface
             "SELECT *
                 FROM `".$this->wpdb->prefix.
                     $this->class::tableName()."` AS t".
-                $this->where_cond.$this->group_cond.$this->having_cond.
-                    $this->order_cond.$this->limit_cond,
+                $this->where_cond.$this->escape_exp.$this->group_cond.
+                    $this->having_cond.$this->order_cond.$this->limit_cond,
             ARRAY_A
         );
 
