@@ -1,4 +1,4 @@
-# Magnate 0.9.2
+# Magnate 0.9.3
 
 ## TODO
 
@@ -6,7 +6,11 @@
 
 2. Write the docs.
 
-3. Add JOIN to Active Record. (?)
+3. Add ActiveRecordCollection::deleteAll().
+
+4. Add CSRF-protection.
+
+5. Add JOIN to Active Record. (?)
 
 ## How to use
 

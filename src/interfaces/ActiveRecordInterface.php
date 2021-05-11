@@ -45,6 +45,16 @@ interface ActiveRecordInterface
     public function save() : self;
 
     /**
+     * Delete an entry.
+     * @since 0.9.3
+     * 
+     * @return $this
+     * 
+     * @throws Magnate\Exceptions\ActiveRecordException
+     */
+    public function delete() : self;
+
+    /**
      * Create an ActiveRecordSelect instance and calls its where() method.
      * @since 0.0.8
      * 

@@ -222,6 +222,54 @@ abstract class ActiveRecord implements ActiveRecordInterface
     }
 
     /**
+     * @since 0.9.3
+     * 
+     * @throws Magnate\Exceptions\ActiveRecordException
+     */
+    public function delete() : self
+    {
+
+        $id = (int)$this->id;
+
+        if (empty($id)) throw new ActiveRecordException(
+            sprintf(ActiveRecordException::pickMessage(
+                ActiveRecordException::EMPTY
+            ), 'Entry ID'),
+            ActiveRecordException::pickCode(ActiveRecordException::EMPTY)
+        );
+
+        $data = $this->getRawData($id);
+
+        if (empty($data)) throw new ActiveRecordException(
+            sprintf(ActiveRecordException::pickMessage(
+                ActiveRecordException::NOT_FOUND
+            ), 'Entry'),
+            ActiveRecordException::pickCode(ActiveRecordException::NOT_FOUND)
+        );
+
+        $wpdb = $this->wpdb();
+
+        if (empty($wpdb->delete(
+            $wpdb->prefix.$this->tableName(),
+            [
+                'id' => $id
+            ],
+            ['%d']
+        ))) throw new ActiveRecordException(
+            sprintf(ActiveRecordException::pickMessage(
+                ActiveRecordException::ENTRY
+            ), 'deleting'),
+            ActiveRecordException::pickCode(ActiveRecordException::ENTRY)
+        );
+
+        unset($this->ar_fields_types['id']);
+        unset($this->ar_fields_values['id']);
+
+        return $this;
+
+    }
+
+    /**
      * @since 0.0.8
      */
     public static function where(array $conditions) : ActiveRecordSelectInterface
