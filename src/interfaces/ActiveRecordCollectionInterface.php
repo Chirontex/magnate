@@ -32,4 +32,12 @@ interface ActiveRecordCollectionInterface
      */
     public function last() : ActiveRecordInterface;
 
+    /**
+     * Delete all AR objects.
+     * @since 0.9.4
+     * 
+     * @return $this
+     */
+    public function deleteAll() : self;
+
 }

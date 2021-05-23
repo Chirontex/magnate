@@ -95,4 +95,22 @@ class ActiveRecordCollection implements ActiveRecordCollectionInterface
 
     }
 
+    /**
+     * @since 0.9.4
+     */
+    public function deleteAll() : self
+    {
+
+        foreach ($this->collection as $entity) {
+
+            $entity->delete();
+
+        }
+
+        $this->collection = [];
+
+        return $this;
+
+    }
+
 }
