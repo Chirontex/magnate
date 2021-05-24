@@ -328,4 +328,14 @@ class ActiveRecordSelect implements ActiveRecordSelectInterface
 
     }
 
+    /**
+     * @since 0.9.5
+     */
+    public function getIterator() : ActiveRecordCollectionInterface
+    {
+        
+        return $this->get();
+
+    }
+
 }

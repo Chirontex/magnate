@@ -23,6 +23,12 @@ class ActiveRecordCollection implements ActiveRecordCollectionInterface
     protected $collection = [];
 
     /**
+     * @var int $position
+     * @since 0.9.5
+     */
+    protected $position = -1;
+
+    /**
      * @since 0.0.6
      * 
      * @param ActiveRecordInterface[] $collection
@@ -110,6 +116,83 @@ class ActiveRecordCollection implements ActiveRecordCollectionInterface
         $this->collection = [];
 
         return $this;
+
+    }
+
+    /**
+     * @since 0.9.5
+     */
+    public function count() : int
+    {
+        
+        return count($this->collection);
+
+    }
+
+    /**
+     * @since 0.9.5
+     * 
+     * @return int
+     * If collection is empty, -1 will be returned.
+     */
+    public function key() : int
+    {
+        
+        if (empty($this->collection)) $this->position = -1;
+
+        return $this->position;
+
+    }
+
+    /**
+     * @since 0.9.5
+     */
+    public function valid() : bool
+    {
+        
+        return isset($this->collection[$this->position]);
+
+    }
+
+    /**
+     * @since 0.9.5
+     * 
+     * @return ActiveRecordInterface
+     */
+    public function current() : ActiveRecordInterface
+    {
+
+        if (!$this->valid()) throw new ActiveRecordCollectionException(
+            sprintf(ActiveRecordCollectionException::pickMessage(
+                ActiveRecordCollectionException::NOT_EXISTS
+            ), 'Member with \''.$this->position.'\' key'),
+            ActiveRecordCollectionException::pickCode(
+                ActiveRecordCollectionException::NOT_EXISTS
+            )
+        );
+        
+        return $this->collection[$this->position];
+
+    }
+
+    /**
+     * @since 0.9.5
+     */
+    public function next()
+    {
+        
+        ++$this->position;
+
+    }
+
+    /**
+     * @since 0.9.5
+     */
+    public function rewind()
+    {
+        
+        if (empty($this->collection)) $this->position = -1;
+        else $this->position = 0;
 
     }
 

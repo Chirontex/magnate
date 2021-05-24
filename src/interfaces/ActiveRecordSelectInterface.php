@@ -5,11 +5,13 @@
  */
 namespace Magnate\Interfaces;
 
+use IteratorAggregate;
+
 /**
  * ActiveRecordSelect interface.
  * @since 0.0.7
  */
-interface ActiveRecordSelectInterface
+interface ActiveRecordSelectInterface extends IteratorAggregate
 {
 
     /**

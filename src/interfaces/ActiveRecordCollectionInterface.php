@@ -5,7 +5,10 @@
  */
 namespace Magnate\Interfaces;
 
-interface ActiveRecordCollectionInterface
+use Countable;
+use Iterator;
+
+interface ActiveRecordCollectionInterface extends Countable, Iterator
 {
 
     /**

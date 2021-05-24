@@ -1,6 +1,6 @@
 {
     "name": "magnate/magnate",
-    "version": "0.9.3",
+    "version": "0.9.5",
     "type": "framework",
     "description": "Framework for WordPress plugin development.",
     "keywords": ["wordpress", "framework", "activerecord", "plugin"],

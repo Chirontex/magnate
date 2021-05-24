@@ -124,12 +124,7 @@ abstract class ActiveRecord implements ActiveRecordInterface
     /**
      * @since 0.0.5
      */
-    public static function tableName() : string
-    {
-
-        return '';
-
-    }
+    abstract public static function tableName() : string;
 
     /**
      * @since 0.0.5
