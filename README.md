@@ -1,4 +1,4 @@
-# Magnate 0.9.6
+# Magnate 0.9.7
 
 ## TODO
 
@@ -64,4 +64,4 @@ $document = Document::where(
 
 The get() method returns us a **\Magnate\Tables\ActiveRecordCollection** object, and all() method retrieves a list of model instances.
 
-Of course, you can be save the model state in database by calling the save() method.
+Of course, you can save the model state in database by calling the save() method.

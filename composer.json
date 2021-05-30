@@ -1,6 +1,6 @@
 {
     "name": "magnate/magnate",
-    "version": "0.9.5",
+    "version": "0.9.7",
     "type": "framework",
     "description": "Framework for WordPress plugin development.",
     "keywords": ["wordpress", "framework", "activerecord", "plugin"],
@@ -20,11 +20,14 @@
     "autoload": {
         "psr-4": {
             "Magnate\\": "src",
-            "Magnate\\Tables\\": "src/tables",
-            "Magnate\\Interfaces\\": "src/interfaces",
-            "Magnate\\Injectors\\": "src/injectors",
-            "Magnate\\Helpers\\": "src/helpers",
-            "Magnate\\Exceptions\\": "src/exceptions"
+            "Magnate\\Tables\\": "src/Tables",
+            "Magnate\\Interfaces\\": "src/Interfaces",
+            "Magnate\\Injectors\\": "src/Injectors",
+            "Magnate\\Helpers\\": "src/Helpers",
+            "Magnate\\Exceptions\\": "src/Exceptions"
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
     }
 }
