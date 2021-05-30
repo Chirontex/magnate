@@ -21,6 +21,14 @@ interface ActiveRecordInterface
     public static function tableName() : string;
 
     /**
+     * Return primary field name.
+     * @since 0.9.6
+     * 
+     * @return string
+     */
+    public static function getPrimaryFieldName() : string;
+
+    /**
      * Return Active Record object by ID.
      * @since 0.0.5
      * 

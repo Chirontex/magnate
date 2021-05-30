@@ -106,11 +106,13 @@ abstract class ActiveRecord implements ActiveRecordInterface
 
         $table_name = static::tableName();
 
+        $primary_column = static::getPrimaryFieldName();
+
         $select = $wpdb->get_results(
             $wpdb->prepare(
                 "SELECT *
                     FROM `".$wpdb->prefix.$table_name."` AS t
-                    WHERE t.id = %d",
+                    WHERE t.".$primary_column." = %d",
                 $id
             ),
             ARRAY_A
@@ -125,6 +127,29 @@ abstract class ActiveRecord implements ActiveRecordInterface
      * @since 0.0.5
      */
     abstract public static function tableName() : string;
+
+    /**
+     * @since 0.9.6
+     */
+    public static function getPrimaryFieldName() : string
+    {
+
+        $wpdb = static::wpdb();
+
+        $table_name = static::tableName();
+
+        $column_name = $wpdb->get_var(
+            "SELECT t.COLUMN_NAME
+                FROM information_schema.KEY_COLUMN_USAGE AS t
+                WHERE t.CONSTRAINT_SCHEMA = '".DB_NAME."'
+                AND t.CONSTRAINT_NAME = 'PRIMARY'
+                AND t.TABLE_SCHEMA = '".DB_NAME."'
+                AND t.TABLE_NAME = '".$wpdb->prefix.$table_name."'"
+        );
+
+        return (string)$column_name;
+
+    }
 
     /**
      * @since 0.0.5
