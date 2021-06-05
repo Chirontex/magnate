@@ -115,4 +115,15 @@ class WpdbMock extends wpdb
 
     }
 
+    /**
+     * @return string
+     * Value of the $query argument.
+     */
+    public function prepare($query, ...$args)
+    {
+        
+        return $query;
+
+    }
+
 }
