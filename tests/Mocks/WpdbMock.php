@@ -126,4 +126,24 @@ class WpdbMock extends wpdb
 
     }
 
+    /**
+     * @since 0.9.8
+     */
+    public function replace($table, $data, $format = null)
+    {
+        
+        return 1;
+
+    }
+
+    /**
+     * @since 0.9.8
+     */
+    public function delete($table, $where, $where_format = null)
+    {
+        
+        return 1;
+
+    }
+
 }
