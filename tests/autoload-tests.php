@@ -6,12 +6,12 @@
  */
 spl_autoload_register(function($classname) {
 
-    if (strpos($classname, 'Magnate\\Test') !== false) {
+    if (strpos($classname, 'Magnate\\Tests') !== false) {
 
         $file = explode('\\', $classname);
         
         if ($file[0] !== 'Magnate' ||
-        $file[1] !== 'Test') return;
+        $file[1] !== 'Tests') return;
         
         $path = __DIR__.'/';
 
