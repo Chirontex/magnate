@@ -3,7 +3,6 @@
 namespace Magnate\Tests\Mocks\Models;
 
 use Magnate\Tables\ActiveRecord;
-use wpdb;
 
 /**
  * Test model for ActiveRecordTest.
