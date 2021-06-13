@@ -94,6 +94,25 @@ class ActiveRecordTest extends TestCase
 
         $this->assertSame($entity['test_value'], $model->test_value);
 
+        return $entity;
+
+    }
+
+    /**
+     * @test
+     * 
+     * @depends testRefresh
+     * 
+     * Model deleting test.
+     */
+    public function testDelete(array $entity)
+    {
+
+        $model = TestModel::find(1);
+        $model->delete();
+
+        $this->assertNotSame($entity['id'], $model->id);
+
     }
 
 }
