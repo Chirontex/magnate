@@ -1,8 +1,9 @@
 <?php
 
-namespace Magnate\Tests\Models;
+namespace Magnate\Tests\Mocks\Models;
 
 use Magnate\Tables\ActiveRecord;
+use wpdb;
 
 /**
  * Test model for ActiveRecordTest.
@@ -11,7 +12,7 @@ use Magnate\Tables\ActiveRecord;
 class TestModel extends ActiveRecord
 {
 
-    public static function tableName(): string
+    public static function tableName() : string
     {
         
         return 'test';
