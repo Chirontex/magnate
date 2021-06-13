@@ -269,10 +269,12 @@ abstract class ActiveRecord implements ActiveRecordInterface
 
         $wpdb = $this->wpdb();
 
+        $primary_column = static::getPrimaryFieldName();
+
         if (empty($wpdb->delete(
             $wpdb->prefix.$this->tableName(),
             [
-                'id' => $id
+                $primary_column => $id
             ],
             ['%d']
         ))) throw new ActiveRecordException(
@@ -282,8 +284,8 @@ abstract class ActiveRecord implements ActiveRecordInterface
             ActiveRecordException::pickCode(ActiveRecordException::ENTRY)
         );
 
-        unset($this->ar_fields_types['id']);
-        unset($this->ar_fields_values['id']);
+        unset($this->ar_fields_types[$primary_column]);
+        unset($this->ar_fields_values[$primary_column]);
 
         return $this;
 
