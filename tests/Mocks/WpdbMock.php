@@ -111,7 +111,7 @@ class WpdbMock extends wpdb
     public function get_results($query = null, $output = OBJECT)
     {
         
-        return $query;
+        return $this->results;
 
     }
 

@@ -43,13 +43,56 @@ class ActiveRecordTest extends TestCase
     public function testNew()
     {
 
-        $GLOBALS['wpdb'] = $this->getWpdb();
+        $entity = [
+            'id' => 1,
+            'test_value' => 'this is value'
+        ];
+
+        $GLOBALS['wpdb'] = $this->getWpdb('id', [$entity]);
 
         $model = new TestModel;
-        $model->test_key = 'this is a key';
         $model->test_value = 'this is a value';
 
         $this->assertSame($model, $model->save());
+
+        return $entity;
+
+    }
+
+    /**
+     * @test
+     * 
+     * @depends testNew
+     * 
+     * Model finding test.
+     */
+    public function testFind(array $entity)
+    {
+
+        $model = TestModel::find(1);
+
+        $this->assertSame($entity['id'], $model->id);
+        $this->assertSame($entity['test_value'], $model->test_value);
+
+        return $entity;
+
+    }
+
+    /**
+     * @test
+     * 
+     * @depends testFind
+     * 
+     * Model refreshing test.
+     */
+    public function testRefresh(array $entity)
+    {
+
+        $model = TestModel::find(1);
+        $model->test_value = 'new value';
+        $model->refresh();
+
+        $this->assertSame($entity['test_value'], $model->test_value);
 
     }
 
