@@ -1,14 +1,12 @@
-# Magnate 0.9.7
+# Magnate 0.9.8
 
 ## TODO
 
-1. Testing.
+1. Write the docs.
 
-2. Write the docs.
+2. Add CSRF-protection.
 
-3. Add CSRF-protection.
-
-4. Add JOIN to Active Record. (?)
+3. Add JOIN to Active Record. (in progress)
 
 ## How to use
 
