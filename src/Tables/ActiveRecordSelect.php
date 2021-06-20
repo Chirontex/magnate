@@ -120,13 +120,33 @@ class ActiveRecordSelect implements ActiveRecordSelectInterface
                 $key = $keys[$i];
 
                 $where .= $i === 0 ? "" : " AND";
-                $where .= " t.".$key." ";
 
                 if (is_array($condition[$key])) {
 
+                    if (isset($condition[$key]['table'])) {
+
+                        if (!is_int($condition[$key]['table'])) {
+                            
+                            throw new ActiveRecordSelectException(
+                                sprintf(
+                                    ActiveRecordSelectException::pickMessage(
+                                        ActiveRecordSelectException::NOT_TYPE
+                                    ), "Table key", "integer"
+                                ),
+                                ActiveRecordSelectException::pickCode(
+                                    ActiveRecordSelectException::NOT_TYPE
+                                )
+                            );
+                        
+                        }
+
+                        $table_key = "t".$condition[$key]['table'].".";
+
+                    } else $table_key = "t0.";
+
                     if (isset($condition[$key]['condition']) &&
                         isset($condition[$key]['value'])) $where .=
-                            $this->wpdb->prepare(
+                            $table_key.$key." ".$this->wpdb->prepare(
                                 $condition[$key]['condition'],
                                 $condition[$key]['value']
                             );
@@ -178,7 +198,7 @@ class ActiveRecordSelect implements ActiveRecordSelectInterface
 
             $group .= empty($group) ? " GROUP BY" : ",";
 
-            $group .= " t.".$key;
+            $group .= " t0.".$key;
 
         }
 
@@ -200,7 +220,7 @@ class ActiveRecordSelect implements ActiveRecordSelectInterface
 
             $having .= empty($having) ? " HAVING" : ",";
 
-            $having .= " t.".$key." ".$this->wpdb->prepare(
+            $having .= " t0.".$key." ".$this->wpdb->prepare(
                 $parts['condition'], $parts['value']
             );
 
@@ -224,7 +244,7 @@ class ActiveRecordSelect implements ActiveRecordSelectInterface
 
             $order .= empty($order) ? " ORDER BY" : ",";
 
-            $order .= " t.".$key." ".$cond;
+            $order .= " t0.".$key." ".$cond;
 
         }
 
@@ -255,7 +275,7 @@ class ActiveRecordSelect implements ActiveRecordSelectInterface
         $select = $this->wpdb->get_results(
             "SELECT *
                 FROM `".$this->wpdb->prefix.
-                    $this->class::tableName()."` AS t".
+                    $this->class::tableName()."` AS t0".
                 $this->where_cond.$this->escape_exp.$this->group_cond.
                     $this->having_cond.$this->order_cond.$this->limit_cond,
             ARRAY_A
