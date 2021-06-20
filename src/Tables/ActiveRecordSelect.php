@@ -93,26 +93,9 @@ class ActiveRecordSelect implements ActiveRecordSelectInterface
 
         $this->wpdb = $wpdb;
         
-        if (!class_exists($class)) throw new ActiveRecordSelectException(
-            sprintf(ActiveRecordSelectException::pickMessage(
-                ActiveRecordSelectException::NOT_EXISTS
-            ), $class),
-            ActiveRecordSelectException::pickCode(
-                ActiveRecordSelectException::NOT_EXISTS
-            )
-        );
+        $e = $this->isActiveRecord($class);
 
-        $interfaces = class_implements($class);
-
-        if (array_search(ActiveRecordInterface::class, $interfaces) ===
-            false) throw new ActiveRecordSelectException(
-                sprintf(ActiveRecordSelectException::pickMessage(
-                    ActiveRecordSelectException::NOT_TYPE
-                ), $class, 'Magnate\\Interfaces\\ActiveRecordInterface implementer'),
-                ActiveRecordSelectException::pickCode(
-                    ActiveRecordSelectException::NOT_TYPE
-                )
-        );
+        if ($e !== null) throw new $e;
 
         $this->class = $class;
         
@@ -335,6 +318,42 @@ class ActiveRecordSelect implements ActiveRecordSelectInterface
     {
         
         return $this->get();
+
+    }
+
+    /**
+     * Checks if class exist and ActiveRecordInterface implementer.
+     * @since 0.9.8
+     * 
+     * @param string $class
+     * 
+     * @return \Magnate\Exceptions\ActiveRecordSelectException|null
+     */
+    protected function isActiveRecord(string $class) : ?ActiveRecordSelectException
+    {
+
+        if (!class_exists($class)) $e = new ActiveRecordSelectException(
+            sprintf(ActiveRecordSelectException::pickMessage(
+                ActiveRecordSelectException::NOT_EXISTS
+            ), $class),
+            ActiveRecordSelectException::pickCode(
+                ActiveRecordSelectException::NOT_EXISTS
+            )
+        );
+
+        $interfaces = class_implements($class);
+
+        if (array_search(ActiveRecordInterface::class, $interfaces) ===
+            false) $e = new ActiveRecordSelectException(
+                sprintf(ActiveRecordSelectException::pickMessage(
+                    ActiveRecordSelectException::NOT_TYPE
+                ), $class, 'Magnate\\Interfaces\\ActiveRecordInterface implementer'),
+                ActiveRecordSelectException::pickCode(
+                    ActiveRecordSelectException::NOT_TYPE
+                )
+        );
+
+        return $e instanceof ActiveRecordSelectException ? $e : null;
 
     }
 
