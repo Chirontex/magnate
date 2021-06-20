@@ -95,7 +95,7 @@ class ActiveRecordSelect implements ActiveRecordSelectInterface
         
         $e = $this->isActiveRecord($class);
 
-        if ($e !== null) throw new $e;
+        if ($e !== null) throw $e;
 
         $this->class = $class;
         
