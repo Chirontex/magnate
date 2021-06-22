@@ -210,7 +210,7 @@ interface ActiveRecordSelectInterface extends IteratorAggregate
      * 
      * @return ActiveRecordInterface
      */
-    public function first() : ActiveRecordInterface;
+    public function first() : ActiveRecordCollectionMemberInterface;
 
     /**
      * Get last collection member.
@@ -218,6 +218,6 @@ interface ActiveRecordSelectInterface extends IteratorAggregate
      * 
      * @return ActiveRecordInterface
      */
-    public function last() : ActiveRecordInterface;
+    public function last() : ActiveRecordCollectionMemberInterface;
 
 }

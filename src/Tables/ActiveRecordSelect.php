@@ -156,7 +156,7 @@ class ActiveRecordSelect implements ActiveRecordSelectInterface
 
                     if (isset($condition[$key]['condition']) &&
                         isset($condition[$key]['value'])) $where .=
-                            $table_key.$key." ".$this->wpdb->prepare(
+                            " ".$table_key.$key." ".$this->wpdb->prepare(
                                 $condition[$key]['condition'],
                                 $condition[$key]['value']
                             );
@@ -411,7 +411,7 @@ class ActiveRecordSelect implements ActiveRecordSelectInterface
     /**
      * @since 0.0.7
      */
-    public function first() : ActiveRecordInterface
+    public function first() : ActiveRecordCollectionMemberInterface
     {
  
         return $this->get()->first();
@@ -421,7 +421,7 @@ class ActiveRecordSelect implements ActiveRecordSelectInterface
     /**
      * @since 0.0.7
      */
-    public function last() : ActiveRecordInterface
+    public function last() : ActiveRecordCollectionMemberInterface
     {
 
         return $this->get()->last();
