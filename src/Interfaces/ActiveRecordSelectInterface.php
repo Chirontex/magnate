@@ -5,6 +5,7 @@
  */
 namespace Magnate\Interfaces;
 
+use Magnate\Tables\ActiveRecordJoinEnum;
 use IteratorAggregate;
 
 /**
@@ -32,6 +33,105 @@ interface ActiveRecordSelectInterface extends IteratorAggregate
      * @return $this
      */
     public function where(array $conditions) : self;
+
+    /**
+     * Add JOIN condition.
+     * @since 0.9.8
+     * 
+     * @param string $ActiveRecord
+     * ActiveRecord model class.
+     * 
+     * @param string $on
+     * ON condition.
+     * 
+     * @param string $type
+     * JOIN type.
+     * 
+     * @return $this
+     * 
+     * @throws \Magnate\Exceptions\ActiveRecordSelectException
+     */
+    public function join(string $ActiveRecord, string $on = "ON t0.id = t%d.t0_id", string $type = ActiveRecordJoinEnum::INNER_JOIN) : self;
+
+    /**
+     * Add INNER JOIN condition.
+     * @since 0.9.8
+     * 
+     * @param string $ActiveRecord
+     * ActiveRecord model class.
+     * 
+     * @param string $on
+     * ON condition.
+     * 
+     * @return $this
+     * 
+     * @throws \Magnate\Exceptions\ActiveRecordSelectException
+     */
+    public function innerJoin(string $ActiveRecord, string $on = "ON t0.id = t%d.t0_id") : self;
+
+    /**
+     * Add FULL JOIN condition.
+     * @since 0.9.8
+     * 
+     * @param string $ActiveRecord
+     * ActiveRecord model class.
+     * 
+     * @param string $on
+     * ON condition.
+     * 
+     * @return $this
+     * 
+     * @throws \Magnate\Exceptions\ActiveRecordSelectException
+     */
+    public function fullJoin(string $ActiveRecord, string $on = "ON t0.id = t%d.t0_id") : self;
+
+    /**
+     * Add RIGHT JOIN condition.
+     * @since 0.9.8
+     * 
+     * @param string $ActiveRecord
+     * ActiveRecord model class.
+     * 
+     * @param string $on
+     * ON condition.
+     * 
+     * @return $this
+     * 
+     * @throws \Magnate\Exceptions\ActiveRecordSelectException
+     */
+    public function rightJoin(string $ActiveRecord, string $on = "ON t0.id = t%d.t0_id") : self;
+
+    /**
+     * Add LEFT JOIN condition.
+     * @since 0.9.8
+     * 
+     * @param string $ActiveRecord
+     * ActiveRecord model class.
+     * 
+     * @param string $on
+     * ON condition.
+     * 
+     * @return $this
+     * 
+     * @throws \Magnate\Exceptions\ActiveRecordSelectException
+     */
+    public function leftJoin(string $ActiveRecord, string $on = "ON t0.id = t%d.t0_id") : self;
+
+    /**
+     * Add CROSS JOIN condition.
+     * @since 0.9.8
+     * 
+     * @param string $ActiveRecord
+     * ActiveRecord model class.
+     * 
+     * @param string $on
+     * ON condition.
+     * 
+     * @return $this
+     * 
+     * @throws \Magnate\Exceptions\ActiveRecordSelectException
+     */
+    public function crossJoin(string $ActiveRecord, string $on = "ON t0.id = t%d.t0_id") : self;
 
     /**
      * Add ESCAPE expression.

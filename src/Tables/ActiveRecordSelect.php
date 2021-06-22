@@ -182,6 +182,9 @@ class ActiveRecordSelect implements ActiveRecordSelectInterface
 
     }
 
+    /**
+     * @since 0.9.8
+     */
     public function join(string $ActiveRecord, string $on = "ON t0.id = t%d.t0_id", string $type = ActiveRecordJoinEnum::INNER_JOIN) : self
     {
 
@@ -208,6 +211,56 @@ class ActiveRecordSelect implements ActiveRecordSelectInterface
         ];
 
         return $this;
+
+    }
+
+    /**
+     * @since 0.9.8
+     */
+    public function innerJoin(string $ActiveRecord, string $on = "ON t0.id = t%d.t0_id") : self
+    {
+
+        return $this->join($ActiveRecord, $on, ActiveRecordJoinEnum::INNER_JOIN);
+
+    }
+
+    /**
+     * @since 0.9.8
+     */
+    public function fullJoin(string $ActiveRecord, string $on = "ON t0.id = t%d.t0_id") : self
+    {
+
+        return $this->join($ActiveRecord, $on, ActiveRecordJoinEnum::FULL_JOIN);
+
+    }
+
+    /**
+     * @since 0.9.8
+     */
+    public function rightJoin(string $ActiveRecord, string $on = "ON t0.id = t%d.t0_id") : self
+    {
+
+        return $this->join($ActiveRecord, $on, ActiveRecordJoinEnum::RIGHT_JOIN);
+
+    }
+
+    /**
+     * @since 0.9.8
+     */
+    public function leftJoin(string $ActiveRecord, string $on = "ON t0.id = t%d.t0_id") : self
+    {
+
+        return $this->join($ActiveRecord, $on, ActiveRecordJoinEnum::LEFT_JOIN);
+
+    }
+
+    /**
+     * @since 0.9.8
+     */
+    public function crossJoin(string $ActiveRecord, string $on = "ON t0.id = t%d.t0_id") : self
+    {
+
+        return $this->join($ActiveRecord, $on, ActiveRecordJoinEnum::CROSS_JOIN);
 
     }
 
