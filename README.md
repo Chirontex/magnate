@@ -6,7 +6,7 @@
 
 2. Add CSRF-protection.
 
-3. Add JOIN to Active Record. (testing)
+3. Add field aliases to Active Record.
 
 ## How to use
 
