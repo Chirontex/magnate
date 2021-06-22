@@ -366,6 +366,7 @@ class ActiveRecordSelect implements ActiveRecordSelectInterface
             "SELECT *
                 FROM `".$this->wpdb->prefix.
                     $this->class::tableName()."` AS t0".
+                    $this->handleJoinConditions().
                 $this->where_cond.$this->escape_exp.$this->group_cond.
                     $this->having_cond.$this->order_cond.$this->limit_cond,
             ARRAY_A
@@ -464,6 +465,31 @@ class ActiveRecordSelect implements ActiveRecordSelectInterface
         );
 
         return $e instanceof ActiveRecordSelectException ? $e : null;
+
+    }
+
+    /**
+     * Handles join conditions.
+     * 
+     * @return string
+     */
+    protected function handleJoinConditions() : string
+    {
+
+        $result = '';
+
+        if (!empty($this->join_conds)) {
+
+            foreach ($this->join_conds as $cond) {
+
+                $result .= ' '.$cond['type'].
+                    ' `'.$cond['model']::tableName().'` '.$cond['on'];
+
+            }
+
+        }
+
+        return $result;
 
     }
 
