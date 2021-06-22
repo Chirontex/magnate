@@ -23,17 +23,17 @@ interface ActiveRecordCollectionInterface extends Countable, Iterator
      * Return first AR object.
      * @since 0.0.6
      * 
-     * @return ActiveRecordInterface
+     * @return ActiveRecordCollectionMemberInterface
      */
-    public function first() : ActiveRecordInterface;
+    public function first() : ActiveRecordCollectionMemberInterface;
 
     /**
      * Return last AR object.
      * @since 0.0.6
      * 
-     * @return ActiveRecordInterface
+     * @return ActiveRecordCollectionMemberInterface
      */
-    public function last() : ActiveRecordInterface;
+    public function last() : ActiveRecordCollectionMemberInterface;
 
     /**
      * Delete all AR objects.

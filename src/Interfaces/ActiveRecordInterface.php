@@ -11,7 +11,7 @@ use Magnate\Tables\ActiveRecordJoinEnum;
  * ActiveRecord interface.
  * @since 0.0.6
  */
-interface ActiveRecordInterface
+interface ActiveRecordInterface extends ActiveRecordCollectionMemberInterface
 {
 
     /**

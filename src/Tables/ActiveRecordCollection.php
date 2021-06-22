@@ -6,9 +6,9 @@
 namespace Magnate\Tables;
 
 use Magnate\Interfaces\ActiveRecordCollectionInterface;
+use Magnate\Interfaces\ActiveRecordCollectionMemberInterface;
 use Magnate\Interfaces\ActiveRecordInterface;
 use Magnate\Exceptions\ActiveRecordCollectionException;
-use Magnate\Tables\SetterGetterTrait;
 
 /**
  * ActiveRecord objs collection.
@@ -18,7 +18,7 @@ class ActiveRecordCollection implements ActiveRecordCollectionInterface
 {
 
     /**
-     * @var ActiveRecordInterface[] $collection
+     * @var ActiveRecordCollectionMemberInterface[] $collection
      * @since 0.0.6
      */
     protected $collection = [];
@@ -32,25 +32,28 @@ class ActiveRecordCollection implements ActiveRecordCollectionInterface
     /**
      * @since 0.0.6
      * 
-     * @param ActiveRecordInterface[] $collection
+     * @param ActiveRecordCollectionMemberInterface[] $collection
      */
     public function __construct(array $collection)
     {
         
         foreach ($collection as $ar) {
 
-            if (!($ar instanceof ActiveRecordInterface) &&
-                array_search(
-                    SetterGetterTrait::class,
-                    class_uses($ar)
-                ) === false) throw new ActiveRecordCollectionException(
-                sprintf(ActiveRecordCollectionException::pickMessage(
-                    ActiveRecordCollectionException::NOT_TYPE
-                ), 'Collection member', ActiveRecordInterface::class),
-                ActiveRecordCollectionException::pickCode(
-                    ActiveRecordCollectionException::NOT_TYPE
-                )
-            );
+            if (!($ar instanceof ActiveRecordCollectionMemberInterface)) {
+
+                    throw new ActiveRecordCollectionException(
+                        sprintf(ActiveRecordCollectionException::pickMessage(
+                                ActiveRecordCollectionException::NOT_TYPE
+                            ),
+                            'Collection member',
+                            ActiveRecordCollectionMemberInterface::class
+                        ),
+                        ActiveRecordCollectionException::pickCode(
+                            ActiveRecordCollectionException::NOT_TYPE
+                        )
+                );
+
+            }
 
         }
 
@@ -71,7 +74,7 @@ class ActiveRecordCollection implements ActiveRecordCollectionInterface
     /**
      * @since 0.0.6
      */
-    public function first() : ActiveRecordInterface
+    public function first() : ActiveRecordCollectionMemberInterface
     {
 
         if (empty($this->collection)) throw new ActiveRecordCollectionException(
@@ -90,7 +93,7 @@ class ActiveRecordCollection implements ActiveRecordCollectionInterface
     /**
      * @since 0.0.6
      */
-    public function last() : ActiveRecordInterface
+    public function last() : ActiveRecordCollectionMemberInterface
     {
 
         if (empty($this->collection)) throw new ActiveRecordCollectionException(
@@ -114,7 +117,7 @@ class ActiveRecordCollection implements ActiveRecordCollectionInterface
 
         foreach ($this->collection as $entity) {
 
-            $entity->delete();
+            if ($entity instanceof ActiveRecordInterface) $entity->delete();
 
         }
 
@@ -162,9 +165,9 @@ class ActiveRecordCollection implements ActiveRecordCollectionInterface
     /**
      * @since 0.9.5
      * 
-     * @return ActiveRecordInterface
+     * @return ActiveRecordCollectionMemberInterface
      */
-    public function current() : ActiveRecordInterface
+    public function current() : ActiveRecordCollectionMemberInterface
     {
 
         if (!$this->valid()) throw new ActiveRecordCollectionException(
