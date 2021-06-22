@@ -9,6 +9,7 @@ use Magnate\Interfaces\ActiveRecordInterface;
 use Magnate\Interfaces\ActiveRecordSelectInterface;
 use Magnate\Exceptions\ActiveRecordException;
 use Magnate\Tables\SetterGetterTrait;
+use Magnate\Tables\ActiveRecordJoinEnum;
 use wpdb;
 
 /**
@@ -255,6 +256,56 @@ abstract class ActiveRecord implements ActiveRecordInterface
     {
 
         return (new ActiveRecordSelect(static::class))->where($conditions);
+
+    }
+
+    /**
+     * @since 0.9.8
+     */
+    public static function join(string $ActiveRecord, string $on = "ON t0.id = t%d.t0_id", string $type = ActiveRecordJoinEnum::INNER_JOIN) : ActiveRecordSelectInterface
+    {
+
+        return (new ActiveRecordSelect(static::class))->join($ActiveRecord, $on, $type);
+
+    }
+
+    /**
+     * @since 0.9.8
+     */
+    public static function innerJoin(string $ActiveRecord, string $on = "ON t0.id = t%d.t0_id") : ActiveRecordSelectInterface
+    {
+
+        return (new ActiveRecordSelect(static::class))->innerJoin($ActiveRecord, $on);
+
+    }
+
+    /**
+     * @since 0.9.8
+     */
+    public static function rightJoin(string $ActiveRecord, string $on = "ON t0.id = t%d.t0_id") : ActiveRecordSelectInterface
+    {
+
+        return (new ActiveRecordSelect(static::class))->rightJoin($ActiveRecord, $on);
+
+    }
+
+    /**
+     * @since 0.9.8
+     */
+    public static function leftJoin(string $ActiveRecord, string $on = "ON t0.id = t%d.t0_id") : ActiveRecordSelectInterface
+    {
+
+        return (new ActiveRecordSelect(static::class))->leftJoin($ActiveRecord, $on);
+
+    }
+
+    /**
+     * @since 0.9.8
+     */
+    public static function crossJoin(string $ActiveRecord, string $on = "ON t0.id = t%d.t0_id") : ActiveRecordSelectInterface
+    {
+
+        return (new ActiveRecordSelect(static::class))->crossJoin($ActiveRecord, $on);
 
     }
 
