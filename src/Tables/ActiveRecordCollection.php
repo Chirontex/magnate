@@ -8,6 +8,7 @@ namespace Magnate\Tables;
 use Magnate\Interfaces\ActiveRecordCollectionInterface;
 use Magnate\Interfaces\ActiveRecordInterface;
 use Magnate\Exceptions\ActiveRecordCollectionException;
+use Magnate\Tables\SetterGetterTrait;
 
 /**
  * ActiveRecord objs collection.
@@ -38,7 +39,11 @@ class ActiveRecordCollection implements ActiveRecordCollectionInterface
         
         foreach ($collection as $ar) {
 
-            if (!($ar instanceof ActiveRecordInterface)) throw new ActiveRecordCollectionException(
+            if (!($ar instanceof ActiveRecordInterface) &&
+                array_search(
+                    SetterGetterTrait::class,
+                    class_uses($ar)
+                ) === false) throw new ActiveRecordCollectionException(
                 sprintf(ActiveRecordCollectionException::pickMessage(
                     ActiveRecordCollectionException::NOT_TYPE
                 ), 'Collection member', ActiveRecordInterface::class),

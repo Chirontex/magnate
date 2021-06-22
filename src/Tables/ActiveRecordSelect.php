@@ -488,8 +488,8 @@ class ActiveRecordSelect implements ActiveRecordSelectInterface
             foreach ($this->join_conds as $key => $cond) {
 
                 $result .= ' '.$cond['type'].
-                    ' `'.$cond['model']::tableName().'` AS t'.($key + 1)
-                    .$cond['on'];
+                    ' `'.$this->wpdb->prefix.$cond['model']::tableName().
+                    '` AS t'.($key + 1).' '.$cond['on'];
 
             }
 
