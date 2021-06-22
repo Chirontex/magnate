@@ -6,7 +6,7 @@ namespace Magnate\Tables;
  * @package Magnate
  * @author Dmitry Shumilin (chirontex@yandex.ru)
  */
-trait SetterGetterTrait
+trait ActiveRecordCollectionMemberTrait
 {
 
     /**

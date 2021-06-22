@@ -8,7 +8,7 @@ namespace Magnate\Tables;
 use Magnate\Interfaces\ActiveRecordInterface;
 use Magnate\Interfaces\ActiveRecordSelectInterface;
 use Magnate\Exceptions\ActiveRecordException;
-use Magnate\Tables\SetterGetterTrait;
+use Magnate\Tables\ActiveRecordCollectionMemberTrait;
 use Magnate\Tables\ActiveRecordJoinEnum;
 use wpdb;
 
@@ -20,7 +20,7 @@ use wpdb;
 abstract class ActiveRecord implements ActiveRecordInterface
 {
 
-    use SetterGetterTrait;
+    use ActiveRecordCollectionMemberTrait;
 
     /**
      * Returns WPDB global singleton link.

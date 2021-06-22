@@ -15,7 +15,7 @@ interface ActiveRecordCollectionInterface extends Countable, Iterator
      * Return AR collection list.
      * @since 0.0.6
      * 
-     * @return ActiveRecordInterface[]
+     * @return ActiveRecordCollectionMemberInterface[]
      */
     public function all() : array;
 

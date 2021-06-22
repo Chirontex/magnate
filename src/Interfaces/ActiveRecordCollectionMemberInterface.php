@@ -9,6 +9,14 @@ namespace Magnate\Interfaces;
 interface ActiveRecordCollectionMemberInterface
 {
 
+    /**
+     * @since 0.9.8
+     */
+    public function __set($name, $value);
 
+    /**
+     * @since 0.9.8
+     */
+    public function __get($name);
 
 }
