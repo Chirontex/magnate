@@ -9,6 +9,7 @@ use Magnate\Interfaces\ActiveRecordSelectInterface;
 use Magnate\Interfaces\ActiveRecordInterface;
 use Magnate\Interfaces\ActiveRecordCollectionInterface;
 use Magnate\Exceptions\ActiveRecordSelectException;
+use Magnate\Tables\ActiveRecordJoinEnum;
 use wpdb;
 
 /**
@@ -38,6 +39,13 @@ class ActiveRecordSelect implements ActiveRecordSelectInterface
      * @since 0.0.7
      */
     protected $where_cond = '';
+
+    /**
+     * @var array[] $join_conds
+     * Join conditions.
+     * @since 0.9.8
+     */
+    protected $join_conds = [];
 
     /**
      * @var string $escape_cond
@@ -169,6 +177,35 @@ class ActiveRecordSelect implements ActiveRecordSelectInterface
         }
 
         $this->where_cond = $where;
+
+        return $this;
+
+    }
+
+    public function join(string $ActiveRecord, string $on = "ON t0.id = t%d.t0_id", string $type = ActiveRecordJoinEnum::INNER_JOIN) : self
+    {
+
+        $e = $this->isActiveRecord($ActiveRecord);
+
+        if ($e !== null) throw $e;
+
+        if (array_search($type, ActiveRecordJoinEnum::JOIN_TYPES) ===
+            false) throw new ActiveRecordSelectException(
+                sprintf(ActiveRecordSelectException::pickMessage(
+                    ActiveRecordSelectException::NOT_TYPE
+                ), 'The type', 'join type'),
+                ActiveRecordSelectException::pickCode(
+                    ActiveRecordSelectException::NOT_TYPE
+                )
+            );
+
+        $count_joins = count($this->join_conds);
+
+        $this->join_conds[] = [
+            'model' => $ActiveRecord,
+            'on' => sprintf($on, $count_joins === 0 ? 1 : $count_joins),
+            'type' => $type
+        ];
 
         return $this;
 
