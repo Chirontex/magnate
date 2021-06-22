@@ -10,6 +10,7 @@ use Magnate\Interfaces\ActiveRecordInterface;
 use Magnate\Interfaces\ActiveRecordCollectionInterface;
 use Magnate\Exceptions\ActiveRecordSelectException;
 use Magnate\Tables\ActiveRecordJoinEnum;
+use Magnate\Tables\SetterGetterTrait;
 use wpdb;
 
 /**
@@ -376,7 +377,11 @@ class ActiveRecordSelect implements ActiveRecordSelectInterface
 
         foreach ($select as $row) {
 
-            $obj = new $this->class;
+            $obj = empty($this->join_conds) ?
+                new $this->class :
+                new class {
+                    use SetterGetterTrait;
+                };
 
             foreach ($row as $key => $value) {
 
@@ -407,7 +412,7 @@ class ActiveRecordSelect implements ActiveRecordSelectInterface
      */
     public function first() : ActiveRecordInterface
     {
-
+ 
         return $this->get()->first();
 
     }

@@ -13,6 +13,16 @@ interface ActiveRecordInterface
 {
 
     /**
+     * @since 0.9.8
+     */
+    public function __set($name, $value);
+
+    /**
+     * @since 0.9.8
+     */
+    public function __get($name);
+
+    /**
      * Return table name.
      * @since 0.0.7
      * 
