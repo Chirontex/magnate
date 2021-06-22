@@ -485,10 +485,11 @@ class ActiveRecordSelect implements ActiveRecordSelectInterface
 
         if (!empty($this->join_conds)) {
 
-            foreach ($this->join_conds as $cond) {
+            foreach ($this->join_conds as $key => $cond) {
 
                 $result .= ' '.$cond['type'].
-                    ' `'.$cond['model']::tableName().'` '.$cond['on'];
+                    ' `'.$cond['model']::tableName().'` AS t'.($key + 1)
+                    .$cond['on'];
 
             }
 
